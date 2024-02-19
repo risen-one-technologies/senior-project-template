@@ -1,0 +1,59 @@
+org: seniorproject
+app: senior-project-backend
+service: backend
+frameworkVersion: '3'
+
+provider:
+  httpApi:
+    cors: true
+  name: aws
+  runtime: nodejs16.x
+  environment: 
+    DYNAMODB_USER_TABLE: ${self:service}-userTable-${sls:stage}
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  profile: user1
+  iam: # Role is applied globally to all functions below allowing access to dynamodb table JobsTable
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:Scan"
+            - "dynamodb:UpdateItem"
+            - "dynamodb:DeleteItem"
+          Resource:
+            - Fn::GetAtt: [ UserTable, Arn ]
+
+functions:
+  createUser:
+    handler: createUser.createUser
+    events:
+      - httpApi:
+          path: /
+          method: POST
+  getUser:
+    handler: getUser.getUser
+    events:
+      - httpApi:
+          path: /
+          method: GET
+resources:
+  Resources:
+    UserTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: primary_key
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: primary_key
+            KeyType: HASH
+        TableName: ${self:service}-userTable-${sls:stage}
+
+
+
+  
+
