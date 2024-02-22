@@ -1,4 +1,4 @@
-org: seniorproject
+org: ucmseniorproject1
 app: senior-project-backend
 service: backend
 frameworkVersion: '3'
