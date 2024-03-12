@@ -32,7 +32,7 @@ provider:
 custom:
   s3Sync:
     - bucketName: angular-site-risen1ucm1
-      localDir: ../frontend
+      localDir: ../frontend/dist/frontend/browser
       deleteRemoved: true # optional, indicates whether sync deletes files no longer present in localDir. Defaults to 'true'
       followSymlinks: true # optional
       defaultContentType: text/html
@@ -68,7 +68,6 @@ resources:
         BucketName: angular-site-risen1ucm1
         WebsiteConfiguration:
           IndexDocument: index.html
-          ErrorDocument: ../frontend/src/index.html
 
 
 
