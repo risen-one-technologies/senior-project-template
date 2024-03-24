@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './form.component.css'
 })
 export class FormComponent {
-
+  previousRequests = ['Example1', 'Example 2', 'Example 3'];
 }
