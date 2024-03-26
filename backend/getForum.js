@@ -1,7 +1,7 @@
-'use strict';
+/*'use strict';
 const AWS = require('aws-sdk');
 
-module.exports.getUser = async (event) => {
+module.exports.getForum = async (event) => {
 
     //http GET 'https://your-api-endpoint-url/getUser?key=user_id_value'
     //http GET 'https://your-api-endpoint-url/getUser?key=John'
@@ -19,7 +19,7 @@ module.exports.getUser = async (event) => {
         if (result.Count === 0) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({ message: 'User not found' })
+                body: JSON.stringify({ message: 'Forum not found' })
             };
         }
 
@@ -39,4 +39,4 @@ module.exports.getUser = async (event) => {
             body: JSON.stringify({ message: 'Internal server error' })
         };
     }
-};
+};*/
