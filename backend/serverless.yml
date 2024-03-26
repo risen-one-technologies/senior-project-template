@@ -69,6 +69,12 @@ functions:
       - httpApi:
           path: /getForums
           method: GET
+  getForum:
+    handler: getForum.getForum
+    events:
+      - httpApi:
+          path: /getForum/{id}
+          method: GET
 resources:
   Resources:
     UserTable:

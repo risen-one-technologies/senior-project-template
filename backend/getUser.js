@@ -3,15 +3,11 @@ const AWS = require('aws-sdk');
 module.exports.getUser = async (event) => {
     const id = event.pathParameters.id; // Get the value of the 'id' parameter from the path
 
-    // Now you can use the 'id' value to retrieve the user based on your business logic
-    // For example, you can use it to query the DynamoDB table
-
-    // Example:
     const dynamodb = new AWS.DynamoDB.DocumentClient();
     const params = {
         TableName: process.env.DYNAMODB_USER_TABLE,
         Key: {
-            primary_key: id // Assuming 'primary_key' is the name of the primary key attribute in your DynamoDB table
+            primary_key: id 
         }
     };
 

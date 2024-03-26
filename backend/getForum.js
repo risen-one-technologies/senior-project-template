@@ -1,22 +1,19 @@
-/*'use strict';
 const AWS = require('aws-sdk');
 
 module.exports.getForum = async (event) => {
+    const id = event.pathParameters.id; // Get the value of the 'id' parameter from the path
 
-    //http GET 'https://your-api-endpoint-url/getUser?key=user_id_value'
-    //http GET 'https://your-api-endpoint-url/getUser?key=John'
-    const queryParams = {
-        TableName: process.env.DYNAMODB_USER_TABLE,
-        KeyConditionExpression: 'primary_key = :key', 
-        ExpressionAttributeValues: {
-            ':key': event.queryStringParameters.key 
+    const dynamodb = new AWS.DynamoDB.DocumentClient();
+    const params = {
+        TableName: process.env.DYNAMODB_FORUM_TABLE,
+        Key: {
+            primary_key: id 
         }
     };
 
-    const dynamodb = new AWS.DynamoDB.DocumentClient();
     try {
-        const result = await dynamodb.query(queryParams).promise();
-        if (result.Count === 0) {
+        const data = await dynamodb.get(params).promise();
+        if (!data.Item) {
             return {
                 statusCode: 404,
                 body: JSON.stringify({ message: 'Forum not found' })
@@ -25,13 +22,7 @@ module.exports.getForum = async (event) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                user: {
-                    name: result.Items[0].primary_key,
-                    email: result.Items[0].email,
-                    supervisorEmail: result.Items[0].supervisorEmail
-                }
-            })
+            body: JSON.stringify(data.Item)
         };
     } catch (error) {
         return {
@@ -39,4 +30,4 @@ module.exports.getForum = async (event) => {
             body: JSON.stringify({ message: 'Internal server error' })
         };
     }
-};*/
+};
