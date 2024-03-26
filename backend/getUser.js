@@ -1,22 +1,23 @@
-'use strict';
 const AWS = require('aws-sdk');
 
 module.exports.getUser = async (event) => {
+    const id = event.pathParameters.id; // Get the value of the 'id' parameter from the path
 
-    //http GET 'https://your-api-endpoint-url/getUser?key=user_id_value'
-    //http GET 'https://your-api-endpoint-url/getUser?key=John'
-    const queryParams = {
+    // Now you can use the 'id' value to retrieve the user based on your business logic
+    // For example, you can use it to query the DynamoDB table
+
+    // Example:
+    const dynamodb = new AWS.DynamoDB.DocumentClient();
+    const params = {
         TableName: process.env.DYNAMODB_USER_TABLE,
-        KeyConditionExpression: 'primary_key = :key', 
-        ExpressionAttributeValues: {
-            ':key': event.queryStringParameters.key 
+        Key: {
+            primary_key: id // Assuming 'primary_key' is the name of the primary key attribute in your DynamoDB table
         }
     };
 
-    const dynamodb = new AWS.DynamoDB.DocumentClient();
     try {
-        const result = await dynamodb.query(queryParams).promise();
-        if (result.Count === 0) {
+        const data = await dynamodb.get(params).promise();
+        if (!data.Item) {
             return {
                 statusCode: 404,
                 body: JSON.stringify({ message: 'User not found' })
@@ -25,13 +26,7 @@ module.exports.getUser = async (event) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                user: {
-                    name: result.Items[0].primary_key,
-                    email: result.Items[0].email,
-                    supervisorEmail: result.Items[0].supervisorEmail
-                }
-            })
+            body: JSON.stringify(data.Item)
         };
     } catch (error) {
         return {

@@ -55,7 +55,7 @@ functions:
     handler: getUser.getUser
     events:
       - httpApi:
-          path: /getUser/{key}
+          path: /getUser/{id}
           method: GET
   createForum:
     handler: createForum.createForum
@@ -99,9 +99,6 @@ resources:
         BucketName: angular-site-risen1ucm1
         WebsiteConfiguration:
           IndexDocument: index.html
-
-
-
 
 
   
