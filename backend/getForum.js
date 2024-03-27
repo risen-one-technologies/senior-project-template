@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk');
 
-module.exports.getUser = async (event) => {
+module.exports.getForum = async (event) => {
     const id = event.pathParameters.id; // Get the value of the 'id' parameter from the path
 
     const dynamodb = new AWS.DynamoDB.DocumentClient();
     const params = {
-        TableName: process.env.DYNAMODB_USER_TABLE,
+        TableName: process.env.DYNAMODB_FORUM_TABLE,
         Key: {
             primary_key: id 
         }
@@ -16,7 +16,7 @@ module.exports.getUser = async (event) => {
         if (!data.Item) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({ message: 'User not found' })
+                body: JSON.stringify({ message: 'Forum not found' })
             };
         }
 

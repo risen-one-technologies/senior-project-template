@@ -13,6 +13,7 @@ provider:
   runtime: nodejs16.x
   environment: 
     DYNAMODB_USER_TABLE: ${self:service}-userTable-${sls:stage}
+    DYNAMODB_FORUM_TABLE: ${self:service}-reimbursementFormTable-${sls:stage}
   stage: ${opt:stage, 'dev'}
   region: us-east-1
   profile: user1
@@ -28,6 +29,7 @@ provider:
             - "dynamodb:DeleteItem"
           Resource:
             - Fn::GetAtt: [ UserTable, Arn ]
+            - Fn::GetAtt: [ ReimbursementFormTable, Arn ]
 
 custom:
   s3Sync:
@@ -41,13 +43,37 @@ functions:
     handler: createUser.createUser
     events:
       - httpApi:
-          path: /
+          path: /createUser
           method: POST
+  getAllUsers:
+    handler: getAllUsers.getAllUsers
+    events:
+      - httpApi:
+          path: /getUsers
+          method: GET
   getUser:
     handler: getUser.getUser
     events:
       - httpApi:
-          path: /
+          path: /getUser/{id}
+          method: GET
+  createForum:
+    handler: createForum.createForum
+    events:
+      - httpApi:
+          path: /createForum
+          method: POST
+  getAllForums:
+    handler: getAllForums.getAllForums
+    events:
+      - httpApi:
+          path: /getForums
+          method: GET
+  getForum:
+    handler: getForum.getForum
+    events:
+      - httpApi:
+          path: /getForum/{id}
           method: GET
 resources:
   Resources:
@@ -62,15 +88,23 @@ resources:
           - AttributeName: primary_key
             KeyType: HASH
         TableName: ${self:service}-userTable-${sls:stage}
+    ReimbursementFormTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: primary_key
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: primary_key
+            KeyType: HASH
+        TableName: ${self:service}-reimbursementFormTable-${sls:stage}
     SiteBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: angular-site-risen1ucm1
         WebsiteConfiguration:
           IndexDocument: index.html
-
-
-
 
 
   
