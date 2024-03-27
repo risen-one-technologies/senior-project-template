@@ -19,9 +19,9 @@ module.exports.getAllForums = async (event) => {
         total: result.Count,
         items: await result.Items.map(body => {
             return{
-                primary_key: body.num,
-                employee_name: body.emp_name,
-                certificationName: body.certificationName,
+                primary_key: body.primary_key,
+                employee_name: body.employee_name,
+                certificationName: body.certification_name,
                 ROC_request: body.ROC_request, //true/false
                 personal_development: body.personal_development, //true/false
                 reason: body.reason, 

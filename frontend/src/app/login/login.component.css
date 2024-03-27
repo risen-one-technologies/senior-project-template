@@ -1,0 +1,99 @@
+main{
+    font-family:'Montserrat', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(/assets/mountain-bg.jpeg);
+    
+}
+.login-island{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: lightgrey;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 32px;
+    width:50rem;
+    background-color: white;
+    padding: 32px;
+    column-gap: 32px;
+    box-shadow: 5px 5px 15px;
+}
+.login-island h1{
+    color: goldenrod;
+    text-decoration-line: underline;
+    text-decoration-color: black;
+}
+#image-container{
+    display: flex;
+    height: 25rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    background-color: aqua;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(/assets/mountain-bg.jpeg);
+
+    border-radius: 32px;
+    border-color: lightgrey;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+#usr-component{
+    display: flex;
+    flex-direction: column;
+    
+}
+#usr-component label{
+    font-size:small;
+}
+#login-usr{
+    padding: 0px 8px 0px 8px;
+
+    border-style: hidden hidden solid hidden;
+    border-color: goldenrod;
+}
+#login-usr:hover{
+    background-color: lightgray;
+}
+#login-usr:focus{
+    outline: none;
+}
+#psw-component{
+    display: flex;
+    flex-direction: column;
+    
+}
+#psw-component label{
+    font-size:small;
+}
+#login-psw{
+    padding: 0px 8px 0px 8px;
+
+    border-style: hidden hidden solid hidden;
+    border-color: goldenrod;
+}
+#login-psw:hover{
+    background-color: lightgray;
+}
+#login-psw:focus{
+    outline: none;
+}
+#login-form a{
+    font-size: xx-small;
+    text-align: right;
+}

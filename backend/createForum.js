@@ -7,9 +7,9 @@ module.exports.createForum = async (event) => {
     const putParams = {
         TableName: process.env.DYNAMODB_FORUM_TABLE,
         Item: {
-            primary_key: body.num,
-            employee_name: body.emp_name,
-            certificationName: body.certificationName,
+            primary_key: body.primary_key,
+            employee_name: body.employee_name,
+            certification_name: body.certification_name,
             ROC_request: body.ROC_request, //true/false
             personal_development: body.personal_development, //true/false
             reason: body.reason, 
