@@ -9,3 +9,7 @@ on a designer reference guide that we all can follow so everything is consistent
 
 Google Drive Link to UX Design:
 https://drive.google.com/drive/folders/1tReKl9IsxDO3Ubkbpaqe0QIM1lc5-rIi?usp=sharing
+
+Google Doc Link to Styling Guide:
+Will be updated as I go along and people have questions but this should help you get inital CSS styling
+https://docs.google.com/document/d/10_1xYvtzqGv8RSWagJyOMZnD4L-rttYrTd7GVaeQVJM/edit?usp=sharing
