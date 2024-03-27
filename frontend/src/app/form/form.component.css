@@ -6,3 +6,27 @@ p {
     text-align: center;
     font-family: 'Montserrat';
 }
+mat-form-field, mat-select {
+    overflow: visible;
+    padding-right: 200px;
+}
+button {
+    border: none;
+    color: #000;
+    background-color: #FBC900;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 47%;
+    border-radius: 50px;
+  }
+mat-checkbox {
+    text-align: left;
+}
+text-area {
+    width: 50%;
+}
