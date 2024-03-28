@@ -29,6 +29,24 @@ export class HomeComponent {
           console.error('Error making GET request:', error);
         }
       );
+      ////////
+      const data = {
+        "primary_key": "5",
+        "certification_name": "Angular Post",
+        "employee_name": "Jeremy"
+      };
+      
+      const encodedData = btoa(JSON.stringify(data));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
   }
 
 }
