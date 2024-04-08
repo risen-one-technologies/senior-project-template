@@ -6,7 +6,25 @@ p {
     text-align: center;
     font-family: 'Montserrat';
 }
-mat-form-field, mat-select {
+.longTextAreaBox {
+    overflow: visible;
+    padding-right: 200px;
+    width: 1500px;
+}
+.shortTextAreaBox {
+    overflow: visible;
+    padding-right: 200px;
+    width: 500px;
+}
+.shortBasicInput {
+    overflow: visible;
+    padding-right: 200px;
+    width: 500px;
+}
+.datePicker {
+    width: 500px;
+}
+mat-form-field {
     overflow: visible;
     padding-right: 200px;
 }

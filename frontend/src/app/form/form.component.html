@@ -16,14 +16,14 @@
     <div>
         <p style="text-align: left; margin-left: 10px;">View Previous Requests</p>
         <mat-form-field>
-            <mat-label>View Previous Requests</mat-label>
+            <mat-label>Certificate Name Goes Here</mat-label>
             <mat-select>
-              <mat-option Value="Certificate Name Goes Here">Certificate Name Goes Here</mat-option>
-              <mat-option Value="Option 1">Option 1</mat-option>
-              <mat-option Value="Option 2">Option 2</mat-option>
+              @for (previousRequest of previousRequests; track previousRequest) {
+                <mat-option [value]="previousRequest.value">{{previousRequest.viewValue}}</mat-option>
+              }
             </mat-select>
-        </mat-form-field>
-        <button class="button" onclick="">Test Button</button>
+          </mat-form-field>
+        <button class="button" onclick="">Add New</button>
     </div>   
     <br><br>    
     <div>
@@ -32,7 +32,7 @@
           <input matInput>
         </mat-form-field>
         <mat-form-field >
-            <mat-label>Input</mat-label>
+            <mat-label>Name of Certification</mat-label>
             <input matInput>
         </mat-form-field>
     </div>
@@ -43,13 +43,68 @@
     </div>
     <div>
         <p style="text-align: left; margin-left: 10px;">Reason for Certification</p>
-        <mat-form-field>
+        <mat-form-field class="longTextAreaBox" >
             <mat-label>Reason for Certification goes here</mat-label>
             <textarea matInput></textarea>
           </mat-form-field>
     </div>
     <div>
-
+        <p style="text-align: left; margin-left: 10px;">Estimated Time of Completion</p>
+        <mat-form-field class="shortTextAreaBox" >
+            <mat-label>Estimated Time of Completion goes here</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+          <mat-form-field class="datePicker">
+            <mat-label>Estimated Certification/Training Date</mat-label>
+            <input matInput [matDatepicker]="picker1">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
     </div>
+    <div>
+        <p style="text-align: left; margin-left: 10px;">Certification Expiration</p>
+        <mat-form-field class="shortTextAreaBox" >
+            <mat-label>Certification Expiration goes here</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+        <mat-form-field class="shortBasicInput">
+                <mat-label>Certification Cost</mat-label>
+                <input matInput>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="shortBasicInput">
+            <mat-label>Name of Previous Certification/Training</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field class="datePicker">
+            <mat-label>Date of Previous Certification/Training</mat-label>
+            <input matInput [matDatepicker]="picker2">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>Employee Sign Off Date</mat-label>
+            <input matInput [matDatepicker]="picker3">
+            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Lead Sign Off Date</mat-label>
+            <input matInput [matDatepicker]="picker4">
+            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Executive Sign Off Date</mat-label>
+            <input matInput [matDatepicker]="picker5">
+            <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+            <mat-datepicker #picker5></mat-datepicker>
+          </mat-form-field>
+    </div>
+
+
 
 </body>
