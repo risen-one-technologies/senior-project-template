@@ -45,10 +45,14 @@ import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 
+import { HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 interface previousRequest {
   value: string;
   viewValue: string;
 }
+
 
 
 @Component({
@@ -98,11 +102,36 @@ interface previousRequest {
 })
 export class FormComponent {
   data = new SendData();
-  previousRequests: previousRequest[] = [
+  constructor(private http: HttpClient) {}
+
+  getForums() {
+    // @ts-ignore
+    let previousRequests = []
+    this.http.get('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/getForums')
+      .subscribe(
+        response => {
+          console.log('Response from GET request:', response);
+          const forums = response; // Assuming the response is an array of forums
+                    
+          // @ts-ignore
+          for (let i = 0; i < forums.total; i++) {
+            // @ts-ignore
+            previousRequests.push({value:("request " + i + "-"+ (i+1)), viewValue:forums.items[i].certificationName, items:forums.items[i]})
+          }
+          //console.log('Number of forums:', forums.length);
+        }
+      );
+      // @ts-ignore
+      return previousRequests
+  }
+
+  previousRequests: previousRequest[] = this.getForums()
+  
+  /*previousRequests: previousRequest[] = [
     {value: 'request 1-0', viewValue: 'Request 1'},
     {value: 'request 2-1', viewValue: 'Request 2'},
     {value: 'request 3-2', viewValue: 'Request 3'},
-  ];
+  ];*/
 
   rocReq(){
     this.data.updateROC()
@@ -131,6 +160,24 @@ export class FormComponent {
     this.data.updateDateOfPrevCert(param7);
 
     this.data.sendData();
+
+    /* 
+    //current error with this involving header mismatch-- uncomment & test once we have headers we are 
+    //sending matched up with the headers in the lambda
+
+    const jsonData = this.data.getData()
+    const encodedData = btoa(JSON.stringify(jsonData));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+      */
   }
 }
 
@@ -202,19 +249,23 @@ export class SendData{
   public updateCertExpiration(param: any){
     this.certExpiration = param;
   }
+  public getData(){
+    return this
+  }
   public sendData(){
     //console.log("Email: "+this.email +" Username: "+this.username);
     console.log(this)
-    // const encodedData = btoa(JSON.stringify(data));
-    //   this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-    //   encodedData)
-    //   .subscribe(
-    //     response => {
-    //       console.log('POST request successful:', response);
-    //     },
-    //     error => {
-    //       console.error('Error making POST request:', error);
-    //     }
-    //   );
-  }
+    /*const encodedData = btoa(JSON.stringify(this));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+  }*/
+}
 }
