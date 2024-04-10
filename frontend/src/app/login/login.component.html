@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-       
         <meta charset="utf-8">
         <meta name="viewport" content="width-device-width, inital-scale=1.0">
         <title>Employee Login</title>
     </head>
     <body>
-        <header>
 
-        </header>
+        <header></header>
+
         <main>
             <div class="login-island">
                 <div id="image-container">
                     <img src="/assets/RisenOneWhite.png" alt="Risen-One-Consulting Logo" width="300" height="300">
                 </div>
-                <div id="login-form">
+                <section id="login-form">
                     <h1>Sign In</h1>
-                    <div id="usr-component">
-                        <label>Username:</label>
-                        <input id="login-usr" type="text">
-                    </div>
-                    <div id="psw-component">
-                        <label>Password:</label>
-                        <input id="login-psw" type="password">
-                        <a id="login-forgot" href="">Forgot your password?</a>
-                    </div>
-                    <div>
-                        <button>Sign In</button>
-                        <button>Sign In with Google</button>
-                    </div>
-                    <div>
-                        <a id="login-account" href="">Need an account?</a>
-                    </div>
-                </div>
+                    <mat-form-field id="usr-component" appearance="outline">
+                        <mat-label>Username:</mat-label>
+                        <input matInput
+                            placeholder="employee@email.com"
+                            [formControl]="email"
+                            required
+                        >
+                    </mat-form-field>
+                    <mat-form-field id="psw-component" appearance="outline">
+                        <mat-label>Password:</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'"
+                            [formControl]="password"
+                            required
+                        >
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" (click)="onClick()">Sign In</button>
+                    <button mat-stroked-button color="disabled" (click)="onClick()">Sign In with Google</button>
+                    <a id="requestAccess" mat-button color="accent">Request Account Assistance</a>
+                </section>
+            </div>
+            <div>
+                <button 
+                    mat-mini-fab color="accent" 
+                    aria-label="Example icon button with a plus one icon"
+                    matTooltip="Request login assistance"
+                    matTooltipPosition="left"
+                    >
+                    <mat-icon>question_mark</mat-icon>
+                </button>
             </div>
         </main>
         <footer>
-
         </footer>
     </body>
 </html>
