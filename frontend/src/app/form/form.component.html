@@ -23,40 +23,40 @@
               }
             </mat-select>
           </mat-form-field>
-        <button class="button" onclick="">Add New</button>
+        <button class="button" (click)="submit()">Add New</button>
     </div>   
     <br><br>    
     <div>
-        <mat-form-field>
+        <mat-form-field >
           <mat-label>Employee Name</mat-label>
-          <input matInput>
+          <input type="text" id="username" name="username" matInput>
         </mat-form-field>
         <mat-form-field >
             <mat-label>Name of Certification</mat-label>
-            <input matInput>
+            <input type="text" id="certName" name="certName" matInput>
         </mat-form-field>
     </div>
     <br><br>
     <div>
-        <mat-checkbox>ROC has reqested I complete this training</mat-checkbox> <br>
-        <mat-checkbox>Personal Deveolpment</mat-checkbox>
+        <mat-checkbox (click)="rocReq()">ROC has reqested I complete this training</mat-checkbox> <br>
+        <mat-checkbox (click)="persDev()">Personal Deveolpment</mat-checkbox>
     </div>
     <div>
         <p style="text-align: left; margin-left: 10px;">Reason for Certification</p>
         <mat-form-field class="longTextAreaBox" >
             <mat-label>Reason for Certification goes here</mat-label>
-            <textarea matInput></textarea>
+            <textarea type="any" id="certReason" name="certReason" matInput></textarea>
           </mat-form-field>
     </div>
     <div>
         <p style="text-align: left; margin-left: 10px;">Estimated Time of Completion</p>
         <mat-form-field class="shortTextAreaBox" >
             <mat-label>Estimated Time of Completion goes here</mat-label>
-            <textarea matInput></textarea>
+            <textarea type="any" id="certTimeComplete" name="certTimeComplete" matInput></textarea>
           </mat-form-field>
           <mat-form-field class="datePicker">
             <mat-label>Estimated Certification/Training Date</mat-label>
-            <input matInput [matDatepicker]="picker1">
+            <input matInput [matDatepicker]="picker1" id="certTrainingDate" name="certTrainingDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -65,21 +65,21 @@
         <p style="text-align: left; margin-left: 10px;">Certification Expiration</p>
         <mat-form-field class="shortTextAreaBox" >
             <mat-label>Certification Expiration goes here</mat-label>
-            <textarea matInput></textarea>
+            <textarea type="any" id="certExpiration" name="certExpiration" matInput></textarea>
         </mat-form-field>
         <mat-form-field class="shortBasicInput">
                 <mat-label>Certification Cost</mat-label>
-                <input matInput>
+                <input type="any" id="cost" name="cost" matInput>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field class="shortBasicInput">
             <mat-label>Name of Previous Certification/Training</mat-label>
-            <input matInput>
+            <input type="any" id="prevCert" name="prevCert" matInput>
         </mat-form-field>
         <mat-form-field class="datePicker">
             <mat-label>Date of Previous Certification/Training</mat-label>
-            <input matInput [matDatepicker]="picker2">
+            <input matInput [matDatepicker]="picker2" id="prevCertDate" name="prevCertDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
