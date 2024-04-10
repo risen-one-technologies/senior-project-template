@@ -162,8 +162,8 @@ export class FormComponent {
     this.data.sendData();
 
     /* 
-    //current error with this involving header mismatch-- uncomment & test once we have headers we are sending matched up
-    //with the headers in the lambda
+    //current error with this involving header mismatch-- uncomment & test once we have headers we are 
+    //sending matched up with the headers in the lambda
 
     const jsonData = this.data.getData()
     const encodedData = btoa(JSON.stringify(jsonData));
