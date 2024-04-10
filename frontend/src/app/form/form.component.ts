@@ -45,10 +45,14 @@ import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 
+import { HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 interface previousRequest {
   value: string;
   viewValue: string;
 }
+
 
 
 @Component({
@@ -98,11 +102,39 @@ interface previousRequest {
 })
 export class FormComponent {
   data = new SendData();
-  previousRequests: previousRequest[] = [
+  constructor(private http: HttpClient) {}
+
+  getForums() {
+    // @ts-ignore
+    let previousRequests = []
+    this.http.get('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/getForums')
+      .subscribe(
+        response => {
+          console.log('Response from GET request:', response);
+          const forums = response; // Assuming the response is an array of forums
+          // @ts-ignore
+          console.log(response.total);
+          
+          
+          // @ts-ignore
+          for (let i = 0; i < forums.total; i++) {
+            // @ts-ignore
+            previousRequests.push({value:("request " + i + "-"+ (i+1)), viewValue:forums.items[i].certificationName})
+          }
+          //console.log('Number of forums:', forums.length);
+        }
+      );
+      // @ts-ignore
+      return previousRequests
+  }
+
+  previousRequests: previousRequest[] = this.getForums()
+  
+  /*previousRequests: previousRequest[] = [
     {value: 'request 1-0', viewValue: 'Request 1'},
     {value: 'request 2-1', viewValue: 'Request 2'},
     {value: 'request 3-2', viewValue: 'Request 3'},
-  ];
+  ];*/
 
   rocReq(){
     this.data.updateROC()
