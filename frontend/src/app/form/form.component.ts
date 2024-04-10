@@ -112,14 +112,11 @@ export class FormComponent {
         response => {
           console.log('Response from GET request:', response);
           const forums = response; // Assuming the response is an array of forums
-          // @ts-ignore
-          console.log(response.total);
-          
-          
+                    
           // @ts-ignore
           for (let i = 0; i < forums.total; i++) {
             // @ts-ignore
-            previousRequests.push({value:("request " + i + "-"+ (i+1)), viewValue:forums.items[i].certificationName})
+            previousRequests.push({value:("request " + i + "-"+ (i+1)), viewValue:forums.items[i].certificationName, items:forums.items[i]})
           }
           //console.log('Number of forums:', forums.length);
         }
@@ -163,6 +160,24 @@ export class FormComponent {
     this.data.updateDateOfPrevCert(param7);
 
     this.data.sendData();
+
+    /* 
+    //current error with this involving header mismatch-- uncomment & test once we have headers we are sending matched up
+    //with the headers in the lambda
+
+    const jsonData = this.data.getData()
+    const encodedData = btoa(JSON.stringify(jsonData));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+      */
   }
 }
 
@@ -234,19 +249,23 @@ export class SendData{
   public updateCertExpiration(param: any){
     this.certExpiration = param;
   }
+  public getData(){
+    return this
+  }
   public sendData(){
     //console.log("Email: "+this.email +" Username: "+this.username);
     console.log(this)
-    // const encodedData = btoa(JSON.stringify(data));
-    //   this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-    //   encodedData)
-    //   .subscribe(
-    //     response => {
-    //       console.log('POST request successful:', response);
-    //     },
-    //     error => {
-    //       console.error('Error making POST request:', error);
-    //     }
-    //   );
-  }
+    /*const encodedData = btoa(JSON.stringify(this));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+  }*/
+}
 }
