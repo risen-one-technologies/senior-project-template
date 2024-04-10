@@ -28,7 +28,7 @@ mat-form-field {
     overflow: visible;
     padding-right: 200px;
 }
-button {
+.button {
     border: none;
     color: #000;
     background-color: #FBC900;
@@ -42,6 +42,33 @@ button {
     left: 47%;
     border-radius: 50px;
   }
+
+.button-2 {
+    border:2px solid #FBC233;
+    color: #FBC233;
+    background-color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-box;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-left: 47%;    
+}
+.button-3 {
+    border: none;
+    color: #000;
+    background-color: #FBC233;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-box;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-left: 20px; 
+}
 mat-checkbox {
     text-align: left;
 }
