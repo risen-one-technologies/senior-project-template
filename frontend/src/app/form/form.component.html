@@ -17,10 +17,10 @@
         <p style="text-align: left; margin-left: 10px;">View Previous Requests</p>
         <mat-form-field>
             <mat-label>Certificate Name Goes Here</mat-label>
-            <mat-select>
-              @for (previousRequest of previousRequests; track previousRequest) {
-                <mat-option [value]="previousRequest.value">{{previousRequest.viewValue}}</mat-option>
-              }
+            <mat-select (selectionChange)="updateForms($event.value)">
+              <mat-option *ngFor="let previousRequest of previousRequests; trackBy: trackByFn" [value]="previousRequest.items">
+                {{previousRequest.viewValue}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         <button class="button" (click)="submit()">Add New</button>
@@ -38,8 +38,8 @@
     </div>
     <br><br>
     <div>
-        <mat-checkbox (click)="rocReq()">ROC has reqested I complete this training</mat-checkbox> <br>
-        <mat-checkbox (click)="persDev()">Personal Deveolpment</mat-checkbox>
+        <mat-checkbox (click)="rocReq()" [checked]="rocRequest" id="rocReq">ROC has reqested I complete this training</mat-checkbox> <br>
+        <mat-checkbox (click)="persDev()" [checked]="personalDev" id="persDev">Personal Deveolpment</mat-checkbox>
     </div>
     <div>
         <p style="text-align: left; margin-left: 10px;">Reason for Certification</p>

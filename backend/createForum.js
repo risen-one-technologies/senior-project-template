@@ -13,6 +13,7 @@ module.exports.createForum = async (event) => {
             ROC_request: body.ROC_request, //true/false
             personal_development: body.personal_development, //true/false
             reason: body.reason, 
+            estimated_completion_time: body.estimated_completion_time,
             estimated_completion_date: body.estimated_completion_date,
             expiration: body.expiration,
             cost: body.cost,

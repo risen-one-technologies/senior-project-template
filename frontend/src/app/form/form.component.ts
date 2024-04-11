@@ -43,16 +43,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
 
 import { HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 
 interface previousRequest {
   value: string;
   viewValue: string;
+  items: any;
 }
-
 
 
 @Component({
@@ -101,9 +100,16 @@ interface previousRequest {
   styleUrl: './form.component.css'
 })
 export class FormComponent {
+  rocRequest = false;
+  personalDev = false;
   data = new SendData();
   constructor(private http: HttpClient) {}
 
+  trackByFn(index: number, item: any): string | number {
+    // Implement your tracking logic here
+    // This example uses the item's ID (assuming it exists)
+    return item.id;
+  }
   getForums() {
     // @ts-ignore
     let previousRequests = []
@@ -123,6 +129,45 @@ export class FormComponent {
       );
       // @ts-ignore
       return previousRequests
+  }
+  // @ts-ignore
+  updateForms(item){
+    console.log(item);
+    (<HTMLInputElement>document.getElementById("username")).value = item.employee_name;
+    (<HTMLInputElement>document.getElementById("certName")).value = item.certificationName;
+    (<HTMLInputElement>document.getElementById("certReason")).value = item.reason;
+    (<HTMLInputElement>document.getElementById("certTimeComplete")).value = item.estimated_completion_time;
+    (<HTMLInputElement>document.getElementById("rocReq")).checked = item.ROC_request;
+    (<HTMLInputElement>document.getElementById("persDev")).checked = item.personal_development;
+    if(item.ROC_request == undefined){
+      (<HTMLInputElement>document.getElementById("rocReq")).checked = false;
+    }
+    if(item.personal_development){
+      
+    }
+    (<HTMLInputElement>document.getElementById("certTrainingDate")).value = item.estimated_completion_date;
+    (<HTMLInputElement>document.getElementById("certExpiration")).value = item.expiration;
+    (<HTMLInputElement>document.getElementById("cost")).value = item.cost;
+    (<HTMLInputElement>document.getElementById("prevCert")).value = item.prior_certification_name;
+    (<HTMLInputElement>document.getElementById("prevCertDate")).value =item.prior_certification_date;
+
+    /*
+            primary_key: body.primary_key,
+            employee_name: body.employee_name,
+            certification_name: body.certification_name,
+            ROC_request: body.ROC_request, //true/false
+            personal_development: body.personal_development, //true/false
+            reason: body.reason, 
+            estimated_completion_date: body.estimated_completion_date,
+            expiration: body.expiration,
+            cost: body.cost,
+            prior_certification_name: body.prior_certification_name,
+            prior_certification_date: body.prior_certification_date,
+            employee_sign_off_date: body.employee_sign_off_date,
+            lead_sign_off_date: body.lead_sign_off_date,
+            executive_sign_off_date: body.executive_sign_off_date
+     */
+
   }
 
   previousRequests: previousRequest[] = this.getForums()
@@ -178,6 +223,19 @@ export class FormComponent {
         }
       );
       */
+  }
+}
+
+export class MyComponent {
+  rocRequest = false;
+  personalDev = false;
+
+  rocReq() {
+    this.rocRequest = !this.rocRequest; // Toggle state on click
+  }
+
+  persDev() {
+    this.personalDev = !this.personalDev; // Toggle state on click
   }
 }
 

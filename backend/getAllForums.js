@@ -26,6 +26,7 @@ module.exports.getAllForums = async (event) => {
                 personal_development: body.personal_development, //true/false
                 reason: body.reason, 
                 estimated_completion_date: body.estimated_completion_date,
+                estimated_completion_time: body.estimated_completion_time,
                 expiration: body.expiration,
                 cost: body.cost,
                 prior_certification_name: body.prior_certification_name,
