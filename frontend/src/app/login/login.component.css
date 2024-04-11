@@ -1,42 +1,49 @@
+
 main{
     font-family:'Montserrat', sans-serif;
-
     display: flex;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 
+    background-image: url(/assets/mountain-bg.jpeg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url(/assets/mountain-bg.jpeg);
+    
+    
     
 }
 .login-island{
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    margin: 32px;
     border-color: lightgrey;
     border-width: 2px;
     border-style: solid;
     border-radius: 32px;
-    width:50rem;
+    width:75%;
+    height: 75%;
     background-color: white;
     padding: 32px;
-    column-gap: 32px;
+    column-gap: 5%;
     box-shadow: 5px 5px 15px;
 }
 .login-island h1{
     color: goldenrod;
-    text-decoration-line: underline;
-    text-decoration-color: black;
+    font-weight: bold;
+    font-size: 32px;
 }
 #image-container{
     display: flex;
-    height: 25rem;
-    width: 100%;
+    
+    width: 50%;
+    height: 100%;
     align-items: center;
     justify-content: center;
-
+    
     background-color: aqua;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,50 +57,17 @@ main{
 #login-form{
     display: flex;
     flex-direction: column;
-    row-gap: 16px;
+    row-gap: 8px;
 }
 
-#usr-component{
-    display: flex;
-    flex-direction: column;
-    
-}
-#usr-component label{
-    font-size:small;
-}
-#login-usr{
-    padding: 0px 8px 0px 8px;
 
-    border-style: hidden hidden solid hidden;
-    border-color: goldenrod;
-}
-#login-usr:hover{
-    background-color: lightgray;
-}
-#login-usr:focus{
-    outline: none;
-}
-#psw-component{
-    display: flex;
-    flex-direction: column;
-    
-}
-#psw-component label{
-    font-size:small;
-}
-#login-psw{
-    padding: 0px 8px 0px 8px;
 
-    border-style: hidden hidden solid hidden;
-    border-color: goldenrod;
-}
-#login-psw:hover{
-    background-color: lightgray;
-}
-#login-psw:focus{
-    outline: none;
-}
-#login-form a{
+#requestAccess{
+    justify-content: right;
+    max-width:fit-content;
     font-size: xx-small;
-    text-align: right;
+}
+#requestBtn{
+    justify-content: baseline;
+    align-items: baseline;
 }
