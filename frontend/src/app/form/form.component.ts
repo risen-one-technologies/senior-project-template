@@ -43,7 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
-
+//HTTP
 import { HttpClient} from '@angular/common/http';
 
 
@@ -203,26 +203,32 @@ export class FormComponent {
     this.data.updateNameOfPrevCert(param6);
     const param7 = (<HTMLInputElement>document.getElementById("prevCertDate")).value;
     this.data.updateDateOfPrevCert(param7);
+    const param8 = (<HTMLInputElement>document.getElementById("employeeSign")).value;
+    this.data.updateEmployeeSignOff(param8);
+    const param9 = (<HTMLInputElement>document.getElementById("leadSign")).value;
+    this.data.updateLeadSignOff(param9);
+    const param10 = (<HTMLInputElement>document.getElementById("execSign")).value;
+    this.data.updateExecSignOff(param10);
 
-    this.data.sendData();
+    this.data.addNew();
 
-    /* 
+    
     //current error with this involving header mismatch-- uncomment & test once we have headers we are 
     //sending matched up with the headers in the lambda
 
-    const jsonData = this.data.getData()
-    const encodedData = btoa(JSON.stringify(jsonData));
-      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-      encodedData)
-      .subscribe(
-        response => {
-          console.log('POST request successful:', response);
-        },
-        error => {
-          console.error('Error making POST request:', error);
-        }
-      );
-      */
+    // const jsonData = this.data.getData()
+    // const encodedData = btoa(JSON.stringify(jsonData));
+    //   this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+    //   encodedData)
+    //   .subscribe(
+    //     response => {
+    //       console.log('POST request successful:', response);
+    //     },
+    //     error => {
+    //       console.error('Error making POST request:', error);
+    //     }
+    //   );
+      
   }
 }
 
@@ -240,7 +246,7 @@ export class MyComponent {
 }
 
 export class SendData{
-  //Don't forget to add view previous requests
+  primaryKey: any;
   name: string;
   certName: string;
   ROCrequest: boolean;
@@ -252,10 +258,14 @@ export class SendData{
   cost: any;
   nameOfPrevCert: string;
   dateOfPrevCert: any;
-  //Employee and Lead Sign off 
+  employeeSignOff: any;
+  leadSignOff: any;
+  execSignOff: any;
+   
 
 
   constructor(){
+    this.primaryKey = 0;
     this.name = "";
     this.certName = "";
     this.certReason = "";
@@ -267,6 +277,12 @@ export class SendData{
     this.certTimeComplete = Date.now;
     this.certTrainingDate = Date.now;
     this.certExpiration = Date.now;
+    this.employeeSignOff = Date.now;
+    this.leadSignOff = Date.now;
+    this.execSignOff = Date.now;
+  }
+  publicUpdatePK(param: any){
+    this.primaryKey = param;
   }
   public updateName(param: string) {
     this.name = param;
@@ -307,23 +323,33 @@ export class SendData{
   public updateCertExpiration(param: any){
     this.certExpiration = param;
   }
+  public updateEmployeeSignOff(param: any){
+    this.employeeSignOff = param;
+  }
+  public updateLeadSignOff(param: any){
+    this.leadSignOff = param;
+  }
+  public updateExecSignOff(param: any){
+    this.execSignOff = param;
+  }
   public getData(){
     return this
   }
-  public sendData(){
-    //console.log("Email: "+this.email +" Username: "+this.username);
+  public addNew(){
     console.log(this)
-    /*const encodedData = btoa(JSON.stringify(this));
-      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-      encodedData)
-      .subscribe(
-        response => {
-          console.log('POST request successful:', response);
-        },
-        error => {
-          console.error('Error making POST request:', error);
-        }
-      );
-  }*/
+    const jsonFile = JSON.stringify(this);
+  //   const encodedData = btoa(JSON.stringify(this));
+  //     this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+  //     encodedData)
+  //     .subscribe(
+  //       response => {
+  //         console.log('POST request successful:', response);
+  //       },
+  //       error => {
+  //         console.error('Error making POST request:', error);
+  //       }
+  //     );
+  // }
+  }
 }
-}
+
