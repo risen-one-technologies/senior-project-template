@@ -43,8 +43,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {provideNativeDateAdapter} from '@angular/material/core';
-//HTTP
+
 import { HttpClient} from '@angular/common/http';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 interface previousRequest {
@@ -150,6 +153,7 @@ export class FormComponent {
     (<HTMLInputElement>document.getElementById("cost")).value = item.cost;
     (<HTMLInputElement>document.getElementById("prevCert")).value = item.prior_certification_name;
     (<HTMLInputElement>document.getElementById("prevCertDate")).value =item.prior_certification_date;
+    
 
     /*
             primary_key: body.primary_key,
@@ -203,34 +207,87 @@ export class FormComponent {
     this.data.updateNameOfPrevCert(param6);
     const param7 = (<HTMLInputElement>document.getElementById("prevCertDate")).value;
     this.data.updateDateOfPrevCert(param7);
-    const param8 = (<HTMLInputElement>document.getElementById("employeeSign")).value;
-    this.data.updateEmployeeSignOff(param8);
-    const param9 = (<HTMLInputElement>document.getElementById("leadSign")).value;
-    this.data.updateLeadSignOff(param9);
-    const param10 = (<HTMLInputElement>document.getElementById("execSign")).value;
-    this.data.updateExecSignOff(param10);
 
-    this.data.addNew();
+    this.data.sendData();
 
-    
+    /* 
     //current error with this involving header mismatch-- uncomment & test once we have headers we are 
     //sending matched up with the headers in the lambda
 
-    // const jsonData = this.data.getData()
-    // const encodedData = btoa(JSON.stringify(jsonData));
-    //   this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-    //   encodedData)
-    //   .subscribe(
-    //     response => {
-    //       console.log('POST request successful:', response);
-    //     },
-    //     error => {
-    //       console.error('Error making POST request:', error);
-    //     }
-    //   );
-      
+    const jsonData = this.data.getData()
+    const encodedData = btoa(JSON.stringify(jsonData));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+      */
+  }
+  generatePdf() {
+    const myusername = (<HTMLInputElement>document.getElementById("username")).value;
+    const certName = (<HTMLInputElement>document.getElementById("certName")).value;
+    const isRocChecked = (<HTMLInputElement>document.getElementById("rocReq")).checked;
+    const isPersDev = (<HTMLInputElement>document.getElementById("persDev")).checked;
+    const certReason = (<HTMLInputElement>document.getElementById("certReason")).value;
+    const certTimeComplete = (<HTMLInputElement>document.getElementById("certTimeComplete")).value;
+    const certTrainingDate = (<HTMLInputElement>document.getElementById("certTrainingDate")).value;
+    const certExpiration = (<HTMLInputElement>document.getElementById("certExpiration")).value;
+    const cost = (<HTMLInputElement>document.getElementById("cost")).value;
+    const prevCert = (<HTMLInputElement>document.getElementById("prevCert")).value;
+    const prevCertDate = (<HTMLInputElement>document.getElementById("prevCertDate")).value;
+    const employeeSign = (<HTMLInputElement>document.getElementById("employeeSign")).value;
+    const leadSign = (<HTMLInputElement>document.getElementById("leadSign")).value;
+    const execSign = (<HTMLInputElement>document.getElementById("execSign")).value;
+
+
+
+    function checkRoc() {
+      if(isRocChecked)
+        return 'Yes';
+      else
+        return 'No'
+    };
+    function checkPersDev() {
+      if(isPersDev)
+        return 'Yes';
+      else
+        return 'No'
+    };
+
+
+    const documentDefinition = {
+      content: [
+        {
+          table: {
+            body: [
+              ['Employee Name: ', myusername],
+              ['Name of Certification:', certName],
+              ['Did ROC request that I complete this training?', checkRoc()],
+              ['Are you completing this certificate for Personal Development?', checkPersDev()],
+              ['Reason for Certification:', certReason],
+              ['Estimated Time of Completion:', certTimeComplete],
+              ['Estimated Certification/Training Date: ', certTrainingDate],
+              ['Certification Expiration: ', certExpiration],
+              ['Certification Cost: ', cost],
+              ['Name of Previous Certification/Training: ', prevCert],
+              ['Date of Previous Certification Training: ', prevCertDate],
+              ['Employee Sign Off Date: ', employeeSign],
+              ['Lead Sign Off Date: ', leadSign],
+              ['Executive Sign off Date: ', execSign]
+            ]
+          }
+        },
+      ],  
+    };
+    pdfMake.createPdf(documentDefinition).download('Reimbursement_Request_Form.pdf');
   }
 }
+
 
 export class MyComponent {
   rocRequest = false;
@@ -246,7 +303,7 @@ export class MyComponent {
 }
 
 export class SendData{
-  primaryKey: any;
+  //Don't forget to add view previous requests
   name: string;
   certName: string;
   ROCrequest: boolean;
@@ -258,14 +315,10 @@ export class SendData{
   cost: any;
   nameOfPrevCert: string;
   dateOfPrevCert: any;
-  employeeSignOff: any;
-  leadSignOff: any;
-  execSignOff: any;
-   
+  //Employee and Lead Sign off 
 
 
   constructor(){
-    this.primaryKey = 0;
     this.name = "";
     this.certName = "";
     this.certReason = "";
@@ -277,12 +330,6 @@ export class SendData{
     this.certTimeComplete = Date.now;
     this.certTrainingDate = Date.now;
     this.certExpiration = Date.now;
-    this.employeeSignOff = Date.now;
-    this.leadSignOff = Date.now;
-    this.execSignOff = Date.now;
-  }
-  publicUpdatePK(param: any){
-    this.primaryKey = param;
   }
   public updateName(param: string) {
     this.name = param;
@@ -323,33 +370,23 @@ export class SendData{
   public updateCertExpiration(param: any){
     this.certExpiration = param;
   }
-  public updateEmployeeSignOff(param: any){
-    this.employeeSignOff = param;
-  }
-  public updateLeadSignOff(param: any){
-    this.leadSignOff = param;
-  }
-  public updateExecSignOff(param: any){
-    this.execSignOff = param;
-  }
   public getData(){
     return this
   }
-  public addNew(){
+  public sendData(){
+    //console.log("Email: "+this.email +" Username: "+this.username);
     console.log(this)
-    const jsonFile = JSON.stringify(this);
-  //   const encodedData = btoa(JSON.stringify(this));
-  //     this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
-  //     encodedData)
-  //     .subscribe(
-  //       response => {
-  //         console.log('POST request successful:', response);
-  //       },
-  //       error => {
-  //         console.error('Error making POST request:', error);
-  //       }
-  //     );
-  // }
-  }
+    /*const encodedData = btoa(JSON.stringify(this));
+      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+      encodedData)
+      .subscribe(
+        response => {
+          console.log('POST request successful:', response);
+        },
+        error => {
+          console.error('Error making POST request:', error);
+        }
+      );
+  }*/
 }
-
+}
