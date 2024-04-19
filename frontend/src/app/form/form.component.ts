@@ -105,6 +105,7 @@ interface previousRequest {
 export class FormComponent {
   rocRequest = false;
   personalDev = false;
+  
   data = new SendData();
   constructor(private http: HttpClient) {}
 
@@ -133,6 +134,7 @@ export class FormComponent {
       // @ts-ignore
       return previousRequests
   }
+  
   // @ts-ignore
   updateForms(item){
     console.log(item);
@@ -140,6 +142,9 @@ export class FormComponent {
     (<HTMLInputElement>document.getElementById("certName")).value = item.certificationName;
     (<HTMLInputElement>document.getElementById("certReason")).value = item.reason;
     (<HTMLInputElement>document.getElementById("certTimeComplete")).value = item.estimated_completion_time;
+    this.rocRequest = item.ROC_request
+    this.personalDev = item.personal_development
+    console.log("forms updated, roc req should be checked?" + item.ROC_request);
     (<HTMLInputElement>document.getElementById("rocReq")).checked = item.ROC_request;
     (<HTMLInputElement>document.getElementById("persDev")).checked = item.personal_development;
     if(item.ROC_request == undefined){
@@ -183,20 +188,26 @@ export class FormComponent {
   ];*/
 
   rocReq(){
+    console.log("roc req updated")
     this.data.updateROC()
   }
   persDev(){
     this.data.updatePersDev()
+  }
+  saveData(){
+    const encodedData = this.data.saveData();
+    console.log(this.data)
   }
   submit(){
     const myusername = (<HTMLInputElement>document.getElementById("username")).value;
     this.data.updateName(myusername);
     const param = (<HTMLInputElement>document.getElementById("certName")).value;
     this.data.updateCertName(param);
+    this.data.updatePK(param);
     const param1 = (<HTMLInputElement>document.getElementById("certReason")).value;
     this.data.updateCertReason(param1);
     const param2 = (<HTMLInputElement>document.getElementById("certTimeComplete")).value;
-    this.data.updateCertTimeComplete(param2);
+    //this.data.updateCertTimeComplete(param2);
     const param3 = (<HTMLInputElement>document.getElementById("certTrainingDate")).value;
     this.data.updateCertTrainingDate(param3);
     const param4 = (<HTMLInputElement>document.getElementById("certExpiration")).value;
@@ -210,7 +221,7 @@ export class FormComponent {
 
     this.data.sendData();
 
-    /* 
+    
     //current error with this involving header mismatch-- uncomment & test once we have headers we are 
     //sending matched up with the headers in the lambda
 
@@ -226,7 +237,6 @@ export class FormComponent {
           console.error('Error making POST request:', error);
         }
       );
-      */
   }
   generatePdf() {
     const myusername = (<HTMLInputElement>document.getElementById("username")).value;
@@ -288,90 +298,102 @@ export class FormComponent {
   }
 }
 
-
-export class MyComponent {
-  rocRequest = false;
-  personalDev = false;
-
-  rocReq() {
-    this.rocRequest = !this.rocRequest; // Toggle state on click
-  }
-
-  persDev() {
-    this.personalDev = !this.personalDev; // Toggle state on click
-  }
-}
-
 export class SendData{
   //Don't forget to add view previous requests
-  name: string;
-  certName: string;
-  ROCrequest: boolean;
-  PersDev: boolean;
-  certReason: string;
-  certTimeComplete: any;
+  primary_key: any;
+  employee_name: string;
+  certification_name: string;
+  ROC_request: boolean;
+  personal_development: boolean;
+  reason: string;
+  estimated_completion_time: any;
   certTrainingDate: any;
-  certExpiration: any;
+  estimated_completion_date: any;
+  expiration: any;
   cost: any;
-  nameOfPrevCert: string;
-  dateOfPrevCert: any;
+  prior_certification_name: string;
+  prior_certification_date: any;
   //Employee and Lead Sign off 
+  /*primary_key: body.primary_key,
+            employee_name: body.employee_name,
+            certification_name: body.certification_name,
+            ROC_request: body.ROC_request, //true/false
+            personal_development: body.personal_development, //true/false
+            reason: body.reason, 
+            estimated_completion_time: body.estimated_completion_time,
+            estimated_completion_date: body.estimated_completion_date,
+            expiration: body.expiration,
+            cost: body.cost,
+            prior_certification_name: body.prior_certification_name,
+            prior_certification_date: body.prior_certification_date,
+            employee_sign_off_date: body.employee_sign_off_date,
+            lead_sign_off_date: body.lead_sign_off_date,
+            executive_sign_off_date: body.executive_sign_off_date */
 
 
   constructor(){
-    this.name = "";
-    this.certName = "";
-    this.certReason = "";
-    this.ROCrequest = false;
-    this.PersDev = false;
-    this.cost = 0;
-    this.nameOfPrevCert = "";
-    this.dateOfPrevCert = Date.now;
-    this.certTimeComplete = Date.now;
-    this.certTrainingDate = Date.now;
-    this.certExpiration = Date.now;
+    this.primary_key = "";
+    this.employee_name= "";
+  this.certification_name= "";
+  this.ROC_request= false
+  this.personal_development= false;
+  this.reason= "";
+  this.estimated_completion_time= Date.now;
+  this.certTrainingDate= Date.now;
+  this.estimated_completion_date= Date.now;
+  this.expiration= Date.now;
+  this.cost= "";
+  this.prior_certification_name= "";
+  this.prior_certification_date= Date.now;
+  
   }
+
+  public updatePK(param: string){
+    this.primary_key = param;
+  }
+
   public updateName(param: string) {
-    this.name = param;
+    this.employee_name = param;
   }
   public updateCertName(param: string){
-    this.certName = param;
+    this.certification_name = param;
   }
   public updateCertReason(param: string){
-    this.certReason = param;
+    this.reason = param;
   }
   public updateROC(){
-    if(this.ROCrequest)
-      this.ROCrequest = false;
+    if(this.ROC_request)
+      this.ROC_request = false;
     else  
-      this.ROCrequest = true;
+      this.ROC_request = true;
   }
   public updatePersDev(){
-    if(this.PersDev)
-      this.PersDev = false;
+    if(this.personal_development)
+      this.personal_development = false;
     else  
-      this.PersDev = true;
+      this.personal_development = true;
   }
   public updateCost(param: any){
     this.cost = param;
   }
   public updateNameOfPrevCert(param: string){
-    this.nameOfPrevCert = param;
+    this.prior_certification_name = param;
   }
   public updateDateOfPrevCert(param: any){
-    this.dateOfPrevCert = param;
-  }
-  public updateCertTimeComplete(param: any){
-    this.certTimeComplete = param;
+    this.prior_certification_date = param;
   }
   public updateCertTrainingDate(param: any){
     this.certTrainingDate = param;
   }
   public updateCertExpiration(param: any){
-    this.certExpiration = param;
+    this.expiration = param;
   }
   public getData(){
     return this
+  }
+  public saveData(){
+    const encodedData = btoa(JSON.stringify(this));
+    return encodedData;
   }
   public sendData(){
     //console.log("Email: "+this.email +" Username: "+this.username);
@@ -387,6 +409,6 @@ export class SendData{
           console.error('Error making POST request:', error);
         }
       );
-  }*/
-}
+    }*/
+  }
 }
