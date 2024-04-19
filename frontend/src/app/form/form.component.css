@@ -1,9 +1,9 @@
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    padding: 0;
+    padding-top: 50px;
+    padding-bottom: 50px;
     background-color: #FBC900;
-    margin-top: 50px;
+    height: fit-content;
   }
 .container {
     display: flex;
@@ -12,7 +12,7 @@ body {
     background-color: white;
     margin-left: 10%;
     margin-right: 10%;
-    
+    border-radius: 50px;  
   }
 .box-1{
     text-align: left; 
@@ -52,7 +52,7 @@ p {
 h1 {
     font-weight: bold;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
 }
 .longTextAreaBox {
     overflow: visible;
@@ -65,12 +65,12 @@ h1 {
     margin-right: 100px;
 }
 .shortBasicInput {
-    width: 350px; 
+    width: 375px; 
     padding: 10px;
-    margin-right: 150px;
+    margin-right: 125px;
 }
 .shortBasicInput-cost {
-    width: 350px; 
+    width: 390px; 
     padding: 10px;
 }
 .employeeName{
@@ -81,59 +81,73 @@ h1 {
     padding: 10px;
 }
 .datePicker {
-    width: 350px; 
+    width: 390px; 
     padding: 10px;
 }
 .datePickerSignatures{
-    width: 250px; 
-    padding: 10px;
+    width: 275px; 
+    padding: 15px;
+    margin-left: 15px;
 }
 mat-form-field {
     overflow: visible;
     padding-right: 200px;
 }
 .button-addNew {
-    border: none;
-    color: #000;
-    background-color: #FBC900;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    margin-left: 20%;
+    border-radius: 50px;
+    margin-left: 300px;
     border-radius: 50px;
   }
 
 .button-exportToPDF {
-    border:2px solid #FBC233;
-    color: #FBC233;
-    background-color: white;
+    border: 2px solid #FBC900;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-box;
     font-size: 16px;
-    cursor: pointer;
+    border-radius: 50px;
     border-radius: 50px;
     margin-left: 67%;    
 }
 .button-save {
-    border: none;
-    color: #000;
-    background-color: #FBC233;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-box;
     font-size: 16px;
-    cursor: pointer;
     border-radius: 50px;
-    margin-left: 15px;
 }
+
 mat-checkbox {
     text-align: left;
 }
 text-area {
     width: 50%;
 }
+.spacer{
+    flex: 1 1 auto;
+}
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    background: black;
+    font-size: 30px;
+    height: 10%;
+    padding-right: 100px;
+  }
+  .menuIcon {
+    font-size: 50px;
+    padding-bottom: 30px;
+    padding-right: 25px;
+
+}
+.accountIcon{
+    font-size: 70px;
+    padding-bottom: 40px;
+    padding-right: 100px;
+
+
+}
+  
+  span {
+    background: black;
+    color: white;
+  }
