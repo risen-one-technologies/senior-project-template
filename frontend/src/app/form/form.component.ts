@@ -189,11 +189,11 @@ export class FormComponent {
     this.data.updatePersDev()
   }
   submit(){
-    this.data.updatePK(Math.random()*1000);
     const myusername = (<HTMLInputElement>document.getElementById("username")).value;
     this.data.updateName(myusername);
     const param = (<HTMLInputElement>document.getElementById("certName")).value;
     this.data.updateCertName(param);
+    this.data.updatePK(param);
     const param1 = (<HTMLInputElement>document.getElementById("certReason")).value;
     this.data.updateCertReason(param1);
     const param2 = (<HTMLInputElement>document.getElementById("certTimeComplete")).value;
@@ -304,7 +304,7 @@ export class MyComponent {
 
 export class SendData{
   //Don't forget to add view previous requests
-  primaryKey: any;
+  primary_key: any;
   employee_name: string;
   certification_name: string;
   ROC_request: boolean;
@@ -336,7 +336,7 @@ export class SendData{
 
 
   constructor(){
-    this.primaryKey = 0;
+    this.primary_key = "";
     this.employee_name= "";
   this.certification_name= "";
   this.ROC_request= false
@@ -352,8 +352,8 @@ export class SendData{
   
   }
 
-  public updatePK(param: any){
-    this.primaryKey = param;
+  public updatePK(param: string){
+    this.primary_key = param;
   }
 
   public updateName(param: string) {
