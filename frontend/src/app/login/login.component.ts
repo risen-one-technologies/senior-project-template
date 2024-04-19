@@ -141,6 +141,7 @@ export class LoginComponent {
 
   onClick(){
     console.log("User attempted sign in!");
+    
   }
 }
 

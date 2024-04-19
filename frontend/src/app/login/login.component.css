@@ -24,7 +24,7 @@ main{
     border-width: 2px;
     border-style: solid;
     border-radius: 32px;
-    width:75%;
+    width:50%;
     height: 75%;
     background-color: white;
     padding: 32px;
@@ -39,7 +39,7 @@ main{
 #image-container{
     display: flex;
     
-    width: 50%;
+    width: 75%;
     height: 100%;
     align-items: center;
     justify-content: center;
@@ -68,6 +68,8 @@ main{
     font-size: xx-small;
 }
 #requestBtn{
-    justify-content: baseline;
-    align-items: baseline;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 32px;
 }

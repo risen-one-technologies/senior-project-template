@@ -1,5 +1,43 @@
-<h1>Welcome Home!</h1>
-<h2>Here is the button you requested!</h2>
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width, inital-scale=1.0">
+        <title>Risen One Consulting</title>
+    </head>
+    <body>
+        <mat-toolbar >
+            <mat-toolbar-row>
+              <span>Risen One Consulting <span id="test">|</span> Employee Portal</span>
+              <span class="example-spacer"></span>
+              <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                <mat-icon>account_circle</mat-icon>
+                
+              </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <header>
+            
+        </header>
+        <main>
+            <section id="hero">
+                <img src="/assets/RisenOneWhite.png" width="500">
+                        <mat-card>
+                            <mat-card-content>
+                                <p>
+                                    <span>Risen One Consulting <span id="test">|</span> Employee Portal</span>
+                                </p>
+                                <mat-divider></mat-divider>
+                            </mat-card-content>
+                            <button mat-button color="primary" (click)="signIn()">
+                                Join Now
+                            </button>
+                        </mat-card>
+            </section>
+        </main>
+        
+    </body>
+</html>
 
-<button class="button" (click)="onClick()">Test Button</button>
+
 
