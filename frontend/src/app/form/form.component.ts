@@ -105,6 +105,7 @@ interface previousRequest {
 export class FormComponent {
   rocRequest = false;
   personalDev = false;
+  
   data = new SendData();
   constructor(private http: HttpClient) {}
 
@@ -133,6 +134,7 @@ export class FormComponent {
       // @ts-ignore
       return previousRequests
   }
+  
   // @ts-ignore
   updateForms(item){
     console.log(item);
@@ -140,6 +142,9 @@ export class FormComponent {
     (<HTMLInputElement>document.getElementById("certName")).value = item.certificationName;
     (<HTMLInputElement>document.getElementById("certReason")).value = item.reason;
     (<HTMLInputElement>document.getElementById("certTimeComplete")).value = item.estimated_completion_time;
+    this.rocRequest = item.ROC_request
+    this.personalDev = item.personal_development
+    console.log("forms updated, roc req should be checked?" + item.ROC_request);
     (<HTMLInputElement>document.getElementById("rocReq")).checked = item.ROC_request;
     (<HTMLInputElement>document.getElementById("persDev")).checked = item.personal_development;
     if(item.ROC_request == undefined){
@@ -183,10 +188,15 @@ export class FormComponent {
   ];*/
 
   rocReq(){
+    console.log("roc req updated")
     this.data.updateROC()
   }
   persDev(){
     this.data.updatePersDev()
+  }
+  saveData(){
+    const encodedData = this.data.saveData();
+    console.log(this.data)
   }
   submit(){
     const myusername = (<HTMLInputElement>document.getElementById("username")).value;
@@ -288,20 +298,6 @@ export class FormComponent {
   }
 }
 
-
-export class MyComponent {
-  rocRequest = false;
-  personalDev = false;
-
-  rocReq() {
-    this.rocRequest = !this.rocRequest; // Toggle state on click
-  }
-
-  persDev() {
-    this.personalDev = !this.personalDev; // Toggle state on click
-  }
-}
-
 export class SendData{
   //Don't forget to add view previous requests
   primary_key: any;
@@ -394,6 +390,10 @@ export class SendData{
   }
   public getData(){
     return this
+  }
+  public saveData(){
+    const encodedData = btoa(JSON.stringify(this));
+    return encodedData;
   }
   public sendData(){
     //console.log("Email: "+this.email +" Username: "+this.username);
