@@ -36,8 +36,8 @@
   </div>
     <div class="box-2">
     <div class="box-2-inside">
-        <p>View Previous Requests</p>
-        <mat-form-field>
+        <p class="selectorBox">View Previous Requests</p>
+        <mat-form-field class="selectorBox">
             <mat-label>Certificate Name</mat-label>
             <mat-select (selectionChange)="updateForms($event.value)">
               <mat-option *ngFor="let previousRequest of previousRequests; trackBy: trackByFn" [value]="previousRequest.items">
@@ -57,7 +57,6 @@
             <input type="text" id="certName" name="certName" matInput>
         </mat-form-field>
     </div>
-    <br><br>
     <div>
         <mat-checkbox (click)="rocReq()" [checked]="rocRequest" id="rocReq">ROC has reqested I complete this training</mat-checkbox> <br>
         <mat-checkbox (click)="persDev()" [checked]="personalDev" id="persDev">Personal Deveolpment</mat-checkbox>
