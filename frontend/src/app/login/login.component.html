@@ -22,6 +22,8 @@
                             placeholder="employee@email.com"
                             [formControl]="email"
                             required
+                            value="unknown"
+                            #user
                         >
                     </mat-form-field>
                     <mat-form-field id="psw-component" appearance="outline">
@@ -34,8 +36,8 @@
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
-                    <button mat-raised-button color="primary" (click)="onClick()">Sign In</button>
-                    <button mat-stroked-button color="disabled" (click)="onClick()">Sign In with Google</button>
+                    <button mat-raised-button color="primary" (click)="openSnackBar(user.value)">Sign In</button>
+                    <button mat-stroked-button color="disabled" >Sign In with Google</button>
                 </section>
             </div>
             <div id="requestBtn">
@@ -51,5 +53,6 @@
         </main>
         <footer>
         </footer>
+        
     </body>
 </html>

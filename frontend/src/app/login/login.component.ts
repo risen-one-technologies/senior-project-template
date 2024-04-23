@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -35,7 +36,7 @@ import { ErrorStateMatcher, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -109,7 +110,8 @@ export class LoginComponent {
 
   errorMessage = '';
 
-  constructor() {
+  constructor(private _snackBar: MatSnackBar, private router: Router ) {
+    
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessageEmail())
@@ -118,20 +120,30 @@ export class LoginComponent {
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessagePassword())
   }
+  ngOnInit(){}
+  openSnackBar(message: string){
+    if (!this.email.hasError('required') && !this.password.hasError('required')){
+      this._snackBar.open("Welcome " + message, "Close",{duration: 2000});
+      this.router.navigate(['/form']);
+    }
+    else{
+      this._snackBar.open("Login Error", "Close",{duration: 2000});
+    }
+    
+  }
+  
   updateErrorMessageEmail(){
     if (this.email.hasError('required')) {
       this.errorMessage = 'You must enter value';
     }
-    else if (this.email.hasError('email')) {
-      this.errorMessage = 'Not a valid email';
-    }
     else {
       this.errorMessage = '';
+
     }
   }
 
   updateErrorMessagePassword(){
-    if (this.email.hasError('required')) {
+    if (this.password.hasError('required')) {
       this.errorMessage = 'You must enter value';
     }
     else {
@@ -139,10 +151,6 @@ export class LoginComponent {
     }
   }
 
-  onClick(){
-    console.log("User attempted sign in!");
-    
-  }
 }
 
 
