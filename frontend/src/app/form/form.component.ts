@@ -207,8 +207,8 @@ export class FormComponent {
     const param1 = (<HTMLInputElement>document.getElementById("certReason")).value;
     this.data.updateCertReason(param1);
     const param2 = (<HTMLInputElement>document.getElementById("certTimeComplete")).value;
-    //this.data.updateCertTimeComplete(param2);
-    const param3 = (<HTMLInputElement>document.getElementById("certTrainingDate")).value;
+    this.data.updateCertTimeComplete(param2);
+    const param3 = (<HTMLInputElement>document.getElementById("certTrainingDate")).value; //
     this.data.updateCertTrainingDate(param3);
     const param4 = (<HTMLInputElement>document.getElementById("certExpiration")).value;
     this.data.updateCertExpiration(param4);
@@ -294,7 +294,7 @@ export class FormComponent {
         },
       ],  
     };
-    pdfMake.createPdf(documentDefinition).download('ReimbursementFor' +certName + '.pdf');
+    pdfMake.createPdf(documentDefinition).download('Reimbursement_Request_Form.pdf');
   }
 }
 
@@ -382,8 +382,14 @@ export class SendData{
   public updateDateOfPrevCert(param: any){
     this.prior_certification_date = param;
   }
+  public updateCertTimeComplete(param: any){
+    this.estimated_completion_time = param;
+  }
   public updateCertTrainingDate(param: any){
-    this.certTrainingDate = param;
+    this.estimated_completion_date = param;
+  }
+  public updateCompletionTime(param: any){
+    this.estimated_completion_time = param;
   }
   public updateCertExpiration(param: any){
     this.expiration = param;
