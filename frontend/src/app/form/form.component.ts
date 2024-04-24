@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // Material Form Controls
@@ -42,9 +42,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -105,9 +105,9 @@ interface previousRequest {
 export class FormComponent {
   rocRequest = false;
   personalDev = false;
-  
+
   data = new SendData();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   trackByFn(index: number, item: any): string | number {
     // Implement your tracking logic here
@@ -122,21 +122,21 @@ export class FormComponent {
         response => {
           console.log('Response from GET request:', response);
           const forums = response; // Assuming the response is an array of forums
-                    
+
           // @ts-ignore
           for (let i = 0; i < forums.total; i++) {
             // @ts-ignore
-            previousRequests.push({value:("request " + i + "-"+ (i+1)), viewValue:forums.items[i].certificationName, items:forums.items[i]})
+            previousRequests.push({ value: ("request " + i + "-" + (i + 1)), viewValue: forums.items[i].certificationName, items: forums.items[i] })
           }
           //console.log('Number of forums:', forums.length);
         }
       );
-      // @ts-ignore
-      return previousRequests
+    // @ts-ignore
+    return previousRequests
   }
-  
+
   // @ts-ignore
-  updateForms(item){
+  updateForms(item) {
     console.log(item);
     (<HTMLInputElement>document.getElementById("username")).value = item.employee_name;
     (<HTMLInputElement>document.getElementById("certName")).value = item.certificationName;
@@ -147,18 +147,18 @@ export class FormComponent {
     console.log("forms updated, roc req should be checked?" + item.ROC_request);
     (<HTMLInputElement>document.getElementById("rocReq")).checked = item.ROC_request;
     (<HTMLInputElement>document.getElementById("persDev")).checked = item.personal_development;
-    if(item.ROC_request == undefined){
+    if (item.ROC_request == undefined) {
       (<HTMLInputElement>document.getElementById("rocReq")).checked = false;
     }
-    if(item.personal_development){
-      
+    if (item.personal_development) {
+
     }
     (<HTMLInputElement>document.getElementById("certTrainingDate")).value = item.estimated_completion_date;
     (<HTMLInputElement>document.getElementById("certExpiration")).value = item.expiration;
     (<HTMLInputElement>document.getElementById("cost")).value = item.cost;
     (<HTMLInputElement>document.getElementById("prevCert")).value = item.prior_certification_name;
-    (<HTMLInputElement>document.getElementById("prevCertDate")).value =item.prior_certification_date;
-    
+    (<HTMLInputElement>document.getElementById("prevCertDate")).value = item.prior_certification_date;
+
 
     /*
             primary_key: body.primary_key,
@@ -180,25 +180,25 @@ export class FormComponent {
   }
 
   previousRequests: previousRequest[] = this.getForums()
-  
+
   /*previousRequests: previousRequest[] = [
     {value: 'request 1-0', viewValue: 'Request 1'},
     {value: 'request 2-1', viewValue: 'Request 2'},
     {value: 'request 3-2', viewValue: 'Request 3'},
   ];*/
 
-  rocReq(){
+  rocReq() {
     console.log("roc req updated")
     this.data.updateROC()
   }
-  persDev(){
+  persDev() {
     this.data.updatePersDev()
   }
-  saveData(){
+  saveData() {
     const encodedData = this.data.saveData();
     console.log(this.data)
   }
-  submit(){
+  submit() {
     const myusername = (<HTMLInputElement>document.getElementById("username")).value;
     this.data.updateName(myusername);
     const param = (<HTMLInputElement>document.getElementById("certName")).value;
@@ -221,13 +221,13 @@ export class FormComponent {
 
     this.data.sendData();
 
-    
+
     //current error with this involving header mismatch-- uncomment & test once we have headers we are 
     //sending matched up with the headers in the lambda
 
     const jsonData = this.data.getData()
     const encodedData = btoa(JSON.stringify(jsonData));
-      this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
+    this.http.post<any>('https://3v6l9ub5ge.execute-api.us-east-1.amazonaws.com/createForum',
       encodedData)
       .subscribe(
         response => {
@@ -257,13 +257,13 @@ export class FormComponent {
 
 
     function checkRoc() {
-      if(isRocChecked)
+      if (isRocChecked)
         return 'Yes';
       else
         return 'No'
     };
     function checkPersDev() {
-      if(isPersDev)
+      if (isPersDev)
         return 'Yes';
       else
         return 'No'
@@ -292,13 +292,13 @@ export class FormComponent {
             ]
           }
         },
-      ],  
+      ],
     };
-    pdfMake.createPdf(documentDefinition).download('Reimbursement_Request_Form.pdf');
+    pdfMake.createPdf(documentDefinition).download(certName + ' Reimbursement Request Form.pdf');
   }
 }
 
-export class SendData{
+export class SendData {
   //Don't forget to add view previous requests
   primary_key: any;
   employee_name: string;
@@ -331,77 +331,77 @@ export class SendData{
             executive_sign_off_date: body.executive_sign_off_date */
 
 
-  constructor(){
+  constructor() {
     this.primary_key = "";
-    this.employee_name= "";
-  this.certification_name= "";
-  this.ROC_request= false
-  this.personal_development= false;
-  this.reason= "";
-  this.estimated_completion_time= Date.now;
-  this.certTrainingDate= Date.now;
-  this.estimated_completion_date= Date.now;
-  this.expiration= Date.now;
-  this.cost= "";
-  this.prior_certification_name= "";
-  this.prior_certification_date= Date.now;
-  
+    this.employee_name = "";
+    this.certification_name = "";
+    this.ROC_request = false
+    this.personal_development = false;
+    this.reason = "";
+    this.estimated_completion_time = Date.now;
+    this.certTrainingDate = Date.now;
+    this.estimated_completion_date = Date.now;
+    this.expiration = Date.now;
+    this.cost = "";
+    this.prior_certification_name = "";
+    this.prior_certification_date = Date.now;
+
   }
 
-  public updatePK(param: string){
+  public updatePK(param: string) {
     this.primary_key = param;
   }
 
   public updateName(param: string) {
     this.employee_name = param;
   }
-  public updateCertName(param: string){
+  public updateCertName(param: string) {
     this.certification_name = param;
   }
-  public updateCertReason(param: string){
+  public updateCertReason(param: string) {
     this.reason = param;
   }
-  public updateROC(){
-    if(this.ROC_request)
+  public updateROC() {
+    if (this.ROC_request)
       this.ROC_request = false;
-    else  
+    else
       this.ROC_request = true;
   }
-  public updatePersDev(){
-    if(this.personal_development)
+  public updatePersDev() {
+    if (this.personal_development)
       this.personal_development = false;
-    else  
+    else
       this.personal_development = true;
   }
-  public updateCost(param: any){
+  public updateCost(param: any) {
     this.cost = param;
   }
-  public updateNameOfPrevCert(param: string){
+  public updateNameOfPrevCert(param: string) {
     this.prior_certification_name = param;
   }
-  public updateDateOfPrevCert(param: any){
+  public updateDateOfPrevCert(param: any) {
     this.prior_certification_date = param;
   }
-  public updateCertTimeComplete(param: any){
+  public updateCertTimeComplete(param: any) {
     this.estimated_completion_time = param;
   }
-  public updateCertTrainingDate(param: any){
+  public updateCertTrainingDate(param: any) {
     this.estimated_completion_date = param;
   }
-  public updateCompletionTime(param: any){
+  public updateCompletionTime(param: any) {
     this.estimated_completion_time = param;
   }
-  public updateCertExpiration(param: any){
+  public updateCertExpiration(param: any) {
     this.expiration = param;
   }
-  public getData(){
+  public getData() {
     return this
   }
-  public saveData(){
+  public saveData() {
     const encodedData = btoa(JSON.stringify(this));
     return encodedData;
   }
-  public sendData(){
+  public sendData() {
     //console.log("Email: "+this.email +" Username: "+this.username);
     console.log(this)
     /*const encodedData = btoa(JSON.stringify(this));

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" class="body">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Page Title</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 
-<mat-toolbar >
+<mat-toolbar>
   <mat-toolbar-row class="toolbar">
     <img src="/assets/RisenOneWhite.png" width="200px">
     <span class="spacer"></span>
@@ -21,54 +22,59 @@
 </mat-toolbar>
 
 <body>
-    <div class="container">
-      <div>
-        <h1>Certification Approval and Reimbursement Request Form</h1>
-    </div> 
-    <div class="box-1">
+  <div class="container">
     <div>
-        <p><strong>Steps to receive approval for reimbursement for a future cerificate of training</strong>
-        <br>1. Complete this form BEFORE you take your certification or training.
-        <br>2. Receive approval from a supervisor or leadership.
-        <br>3. Submit passing exam certification document and reciept to <strong>hr&#64;risen-one.com</strong><br><br>
-        <br><strong>Please note, reimbursement is only for passing exams, not for exam attempts.<br>Certificates already completed may not be approved.<br>Please plan ahead and submit form BEFORE certification or training is taken.</strong></p>
+      <h1>Certification Approval and Reimbursement Request Form</h1>
     </div>
-  </div>
+    <div class="box-1">
+      <div>
+        <p><strong>Steps to receive approval for reimbursement for a future cerificate of training</strong>
+          <br>1. Complete this form BEFORE you take your certification or training.
+          <br>2. Receive approval from a supervisor or leadership.
+          <br>3. Submit passing exam certification document and reciept to <strong>hr&#64;risen-one.com</strong><br><br>
+          <br><strong>Please note, reimbursement is only for passing exams, not for exam attempts.<br>Certificates
+            already completed may not be approved.<br>Please plan ahead and submit form BEFORE certification or training
+            is taken.</strong>
+        </p>
+      </div>
+    </div>
     <div class="box-2">
-    <div class="box-2-inside">
+      <div class="box-2-inside">
         <p class="selectorBox">View Previous Requests</p>
         <mat-form-field class="selectorBox">
-            <mat-label>Certificate Name</mat-label>
-            <mat-select (selectionChange)="updateForms($event.value)">
-              <mat-option *ngFor="let previousRequest of previousRequests; trackBy: trackByFn" [value]="previousRequest.items">
-                {{previousRequest.viewValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        <button mat-flat-button color="primary" class="button-addNew" (click)="submit()">Add New</button>
-    <br><br>    
-    <div>
-        <mat-form-field class="employeeName">
-          <mat-label>Employee Name</mat-label>
-          <input type="text" id="username" name="username" matInput>
+          <mat-label>Certificate Name</mat-label>
+          <mat-select (selectionChange)="updateForms($event.value)">
+            <mat-option *ngFor="let previousRequest of previousRequests; trackBy: trackByFn"
+              [value]="previousRequest.items">
+              {{previousRequest.viewValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-        <mat-form-field class="certName">
+        <button mat-flat-button color="primary" class="button-addNew" (click)="submit()">Add New</button>
+        <br><br>
+        <div>
+          <mat-form-field class="employeeName">
+            <mat-label>Employee Name</mat-label>
+            <input type="text" id="username" name="username" matInput>
+          </mat-form-field>
+          <mat-form-field class="certName">
             <mat-label>Name of Certification</mat-label>
             <input type="text" id="certName" name="certName" matInput>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-checkbox (click)="rocReq()" [checked]="rocRequest" id="rocReq">ROC has reqested I complete this training</mat-checkbox> <br>
-        <mat-checkbox (click)="persDev()" [checked]="personalDev" id="persDev">Personal Deveolpment</mat-checkbox>
-    </div>
-    <div>
-        <mat-form-field class="longTextAreaBox" >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-checkbox (click)="rocReq()" [checked]="rocRequest" id="rocReq">ROC has reqested I complete this
+            training</mat-checkbox> <br>
+          <mat-checkbox (click)="persDev()" [checked]="personalDev" id="persDev">Personal Deveolpment</mat-checkbox>
+        </div>
+        <div>
+          <mat-form-field class="longTextAreaBox">
             <mat-label>Reason for Certification</mat-label>
             <textarea type="any" id="certReason" name="certReason" matInput></textarea>
           </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field class="shortTextAreaBox" >
+        </div>
+        <div>
+          <mat-form-field class="shortTextAreaBox">
             <mat-label>Estimated Time of Completion</mat-label>
             <textarea type="any" id="certTimeComplete" name="certTimeComplete" matInput></textarea>
           </mat-form-field>
@@ -78,53 +84,55 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field class="shortTextAreaBox" >
+        </div>
+        <div>
+          <mat-form-field class="shortTextAreaBox">
             <mat-label>Certification Expiration</mat-label>
             <textarea type="any" id="certExpiration" name="certExpiration" matInput></textarea>
-        </mat-form-field>
-        <mat-form-field class="shortBasicInput-cost">
-                <mat-label>Certification Cost</mat-label>
-                <input type="any" id="cost" name="cost" matInput>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field class="shortBasicInput">
+          </mat-form-field>
+          <mat-form-field class="shortBasicInput-cost">
+            <mat-label>Certification Cost</mat-label>
+            <input type="any" id="cost" name="cost" matInput>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="shortBasicInput">
             <mat-label>Name of Previous Certification/Training</mat-label>
             <input type="any" id="prevCert" name="prevCert" matInput>
-        </mat-form-field>
-        <mat-form-field class="datePicker">
+          </mat-form-field>
+          <mat-form-field class="datePicker">
             <mat-label>Date of Previous Certification/Training</mat-label>
             <input matInput [matDatepicker]="picker2" id="prevCertDate" name="prevCertDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
+        </div>
+      </div>
     </div>
-  </div>   
-  </div>
     <div class="box-3">
-        <mat-form-field class="datePickerSignatures">
-            <mat-label>Employee Sign Off Date</mat-label>
-            <input matInput [matDatepicker]="picker3" id="employeeSign" name="employeeSign">
-            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="datePickerSignatures">
-            <mat-label>Lead Sign Off Date</mat-label>
-            <input matInput [matDatepicker]="picker4" id="leadSign" name="leadSign">
-            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
-            <mat-datepicker #picker4></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="datePickerSignatures">
-            <mat-label>Executive Sign Off Date</mat-label>
-            <input matInput [matDatepicker]="picker5" id="execSign" name="execSign">
-            <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
-            <mat-datepicker #picker5></mat-datepicker>
-          </mat-form-field>
-      <button mat-stroked-button color="primary" class="button-exportToPDF" (click)="generatePdf()">Export to PDF</button>
-      <button mat-flat-button color="primary" class="button-save" (click)="saveData" >Save</button>
+      <mat-form-field class="datePickerSignatures">
+        <mat-label>Employee Sign Off Date</mat-label>
+        <input matInput [matDatepicker]="picker3" id="employeeSign" name="employeeSign">
+        <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="datePickerSignatures">
+        <mat-label>Lead Sign Off Date</mat-label>
+        <input matInput [matDatepicker]="picker4" id="leadSign" name="leadSign">
+        <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="datePickerSignatures">
+        <mat-label>Executive Sign Off Date</mat-label>
+        <input matInput [matDatepicker]="picker5" id="execSign" name="execSign">
+        <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+        <mat-datepicker #picker5></mat-datepicker>
+      </mat-form-field>
+      <button mat-stroked-button color="primary" class="button-exportToPDF" (click)="generatePdf()">Export to
+        PDF</button>
+      <button mat-flat-button color="primary" class="button-save" (click)="saveData">Save</button>
     </div>
-    </div>
+  </div>
 </body>
+
 </html>
