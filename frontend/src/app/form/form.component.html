@@ -6,6 +6,20 @@
     <title>Your Page Title</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
+
+<mat-toolbar >
+  <mat-toolbar-row class="toolbar">
+    <img src="/assets/RisenOneWhite.png" width="200px">
+    <span class="spacer"></span>
+    <span><strong>Risen One Consulting </strong></span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="icon" aria-label="Example icon-button with menu icon">
+      <mat-icon class="menuIcon" fontIcon="menu" color="primary"></mat-icon>
+      <mat-icon class="accountIcon" fontIcon="account_circle" color="primary"></mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <body>
     <div class="container">
       <div>
@@ -13,25 +27,25 @@
     </div> 
     <div class="box-1">
     <div>
-        <p><strong>Steps to recieve approval for reimbursement for a futer cerificate of training</strong>
+        <p><strong>Steps to receive approval for reimbursement for a future cerificate of training</strong>
         <br>1. Complete this form BEFORE you take your certification or training.
-        <br>2. Reveive approval from a supervisor or leadership.
+        <br>2. Receive approval from a supervisor or leadership.
         <br>3. Submit passing exam certification document and reciept to <strong>hr&#64;risen-one.com</strong><br><br>
         <br><strong>Please note, reimbursement is only for passing exams, not for exam attempts.<br>Certificates already completed may not be approved.<br>Please plan ahead and submit form BEFORE certification or training is taken.</strong></p>
     </div>
   </div>
     <div class="box-2">
     <div class="box-2-inside">
-        <p>View Previous Requests</p>
-        <mat-form-field>
-            <mat-label>Certificate Name Goes Here</mat-label>
+        <p class="selectorBox">View Previous Requests</p>
+        <mat-form-field class="selectorBox">
+            <mat-label>Certificate Name</mat-label>
             <mat-select (selectionChange)="updateForms($event.value)">
               <mat-option *ngFor="let previousRequest of previousRequests; trackBy: trackByFn" [value]="previousRequest.items">
                 {{previousRequest.viewValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        <button mat-flat-button	 class="button-addNew" (click)="submit()">Add New</button>
+        <button mat-flat-button color="primary" class="button-addNew" (click)="submit()">Add New</button>
     <br><br>    
     <div>
         <mat-form-field class="employeeName">
@@ -43,22 +57,19 @@
             <input type="text" id="certName" name="certName" matInput>
         </mat-form-field>
     </div>
-    <br><br>
     <div>
         <mat-checkbox (click)="rocReq()" [checked]="rocRequest" id="rocReq">ROC has reqested I complete this training</mat-checkbox> <br>
         <mat-checkbox (click)="persDev()" [checked]="personalDev" id="persDev">Personal Deveolpment</mat-checkbox>
     </div>
     <div>
-        <p>Reason for Certification</p>
         <mat-form-field class="longTextAreaBox" >
-            <mat-label>Reason for Certification goes here</mat-label>
+            <mat-label>Reason for Certification</mat-label>
             <textarea type="any" id="certReason" name="certReason" matInput></textarea>
           </mat-form-field>
     </div>
     <div>
-        <p>Estimated Time of Completion</p>
         <mat-form-field class="shortTextAreaBox" >
-            <mat-label>Estimated Time of Completion goes here</mat-label>
+            <mat-label>Estimated Time of Completion</mat-label>
             <textarea type="any" id="certTimeComplete" name="certTimeComplete" matInput></textarea>
           </mat-form-field>
           <mat-form-field class="datePicker">
@@ -69,9 +80,8 @@
           </mat-form-field>
     </div>
     <div>
-        <p>Certification Expiration</p>
         <mat-form-field class="shortTextAreaBox" >
-            <mat-label>Certification Expiration goes here</mat-label>
+            <mat-label>Certification Expiration</mat-label>
             <textarea type="any" id="certExpiration" name="certExpiration" matInput></textarea>
         </mat-form-field>
         <mat-form-field class="shortBasicInput-cost">
@@ -112,10 +122,9 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
             <mat-datepicker #picker5></mat-datepicker>
           </mat-form-field>
-      <button mat-stroked-button	color="primary" class="button-exportToPDF" (click)="generatePdf()">Export to PDF</button>
-      <button mat-flat-button	 class="button-save" >Save</button>
+      <button mat-stroked-button color="primary" class="button-exportToPDF" (click)="generatePdf()">Export to PDF</button>
+      <button mat-flat-button color="primary" class="button-save" (click)="saveData" >Save</button>
     </div>
     </div>
 </body>
 </html>
-
