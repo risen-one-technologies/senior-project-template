@@ -121,13 +121,16 @@ export class LoginComponent {
       .subscribe(() => this.updateErrorMessagePassword())
   }
   ngOnInit(){}
+  close() {
+    this.router.navigate(['/']);
+  }
   openSnackBar(message: string){
     if (!this.email.hasError('required') && !this.password.hasError('required')){
       this._snackBar.open("Welcome " + message, "Close",{duration: 2000});
       this.router.navigate(['/form']);
     }
     else{
-      this._snackBar.open("Login Error", "Close",{duration: 2000});
+      this._snackBar.open("Login Error : Fill Required Fields", "Close",{duration: 2000});
     }
     
   }

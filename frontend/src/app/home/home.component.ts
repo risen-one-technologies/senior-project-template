@@ -107,6 +107,7 @@ interface previousRequest {
 
 export class HomeComponent {
   constructor (private router: Router ) {}
+  /* Sign In navigation Function */
   ngOnInit(){}
   signIn() {
     this.router.navigate(['/login']);

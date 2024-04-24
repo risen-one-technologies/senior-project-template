@@ -32,7 +32,7 @@ main{
     box-shadow: 5px 5px 15px;
 }
 .login-island h1{
-    color: goldenrod;
+    color: #e0a951;
     font-weight: bold;
     font-size: 32px;
 }
@@ -44,7 +44,7 @@ main{
     align-items: center;
     justify-content: center;
     
-    background-color: aqua;
+    background-color: lightgray;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -67,9 +67,15 @@ main{
     max-width:fit-content;
     font-size: xx-small;
 }
-#requestBtn{
+#request-btn{
     position: fixed;
     bottom: 0;
+    right: 0;
+    margin: 32px;
+}
+#close-btn{
+    position: fixed;
+    top: 0;
     right: 0;
     margin: 32px;
 }

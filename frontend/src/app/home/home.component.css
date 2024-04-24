@@ -2,33 +2,73 @@
 body{
     width: 100vw;
     height: 100vh;
+    background-color: transparent  ;
     overflow: hidden;
-    background-color: black;
-    
+    background-image: url("/assets/mountain-bg.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
-header{
-    color: white;
-    padding: 16px;
-   
-}
-#test{
-    color:goldenrod;
+#yellow{
+    color:#e0a951;
 }
 
 .example-spacer{
     flex: 1 1 auto;
 }
-#masked-img{
-    mask-image: url(/assets/mountainman.png);
-    mask-repeat: no-repeat;
-    mask-position: right;
-    mask-size: contain;
-}
-div{
-    background-color: aqua;
-}
-mat-card{
-    width: 25%;
+#img-container{
     justify-content: center;
-    align-items: center;
+    align-items: right;
+    height: fit-content;
+    width: fit-content;
+    padding: 16px;
+    background-color: #e0a951;
+    border-radius: 100%;
+}
+#img-container2{
+    transform: translateY(-250px);
+    justify-content: center;
+    align-items: right;
+    height: fit-content;
+    width: fit-content;
+    padding: 16px;
+    background-color: #e0a951;
+    border-radius: 100%;
+    z-index: 1;
+}
+#logo2{
+    
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-color: black;
+    background-image: url("/assets/RisenOneWhite.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+#logo{
+    width: 500px;
+    height: 500px;
+    border-radius: 100%;
+    background-color: black;
+    background-image: url("/assets/eliteemployees.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+mat-grid-list{
+    margin: 32px;
+}
+
+#hero-img{
+    transform: translateY(10%);
+}
+
+#tools{
+    background-color: black;
+}
+#white{
+    color: white;
 }

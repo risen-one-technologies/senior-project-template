@@ -1,58 +1,56 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width-device-width, inital-scale=1.0">
-        <title>Employee Login</title>
-    </head>
-    <body>
 
-        <header></header>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, inital-scale=1.0">
+    <title>Employee Login</title>
+</head>
 
-        <main>
-            <div class="login-island">
-                <div id="image-container">
-                    <img src="/assets/RisenOneWhite.png" alt="Risen-One-Consulting Logo" width="300" height="300">
-                </div>
-                <section id="login-form">
-                    <h1>Sign In</h1>
-                    <mat-form-field id="usr-component" appearance="outline">
-                        <mat-label>Username:</mat-label>
-                        <input matInput
-                            placeholder="employee@email.com"
-                            [formControl]="email"
-                            required
-                            value="unknown"
-                            #user
-                        >
-                    </mat-form-field>
-                    <mat-form-field id="psw-component" appearance="outline">
-                        <mat-label>Password:</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'"
-                            [formControl]="password"
-                            required
-                        >
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <button mat-raised-button color="primary" (click)="openSnackBar(user.value)">Sign In</button>
-                    <button mat-stroked-button color="disabled" >Sign In with Google</button>
-                </section>
+<!--Body of Login Page-->
+<body>
+    <!--Main Content of Page-->
+    <main>
+        <!--Close btn to router back to Home-->
+        <div id="close-btn">
+            <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" matTooltip="Close"
+                matTooltipPosition="left" (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <!--Floating Island Container-->
+        <div class="login-island">
+            <div id="image-container">
+                <img src="/assets/RisenOneWhite.png" alt="Risen-One-Consulting Logo" width="300" height="300">
             </div>
-            <div id="requestBtn">
-                <button 
-                    mat-mini-fab color="accent" 
-                    aria-label="Example icon button with a plus one icon"
-                    matTooltip="Request login assistance"
-                    matTooltipPosition="left"
-                    >
-                    <mat-icon>question_mark</mat-icon>
-                </button>
-            </div>
-        </main>
-        <footer>
-        </footer>
-        
-    </body>
+            <section id="login-form">
+                <h1>Sign In</h1>
+                <mat-form-field id="usr-component" appearance="outline">
+                    <mat-label>Username:</mat-label>
+                    <input matInput placeholder="employee@email.com" [formControl]="email" required value="unknown"
+                        #user>
+                </mat-form-field>
+                <mat-form-field id="psw-component" appearance="outline">
+                    <mat-label>Password:</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="openSnackBar(user.value)">Sign In</button>
+                <button mat-stroked-button color="disabled">Sign In with Google</button>
+            </section>
+        </div>
+        <!--Assistance Button (Lacks Functionality)-->
+        <div id="request-btn">
+            <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon"
+                matTooltip="Request login assistance" matTooltipPosition="left">
+                <mat-icon>question_mark</mat-icon>
+            </button>
+        </div>
+    </main>
+</body>
+
 </html>
+<!--Fin-->
