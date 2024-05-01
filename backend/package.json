@@ -1,9 +1,5 @@
 {
   "devDependencies": {
-    "@types/mocha": "^10.0.6",
     "serverless-s3-sync": "^3.3.0"
-  },
-  "dependencies": {
-    "@angular/core": "^17.3.1"
   }
 }

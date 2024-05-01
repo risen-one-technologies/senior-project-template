@@ -45,9 +45,6 @@ import { MatTableModule } from '@angular/material/table';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { HttpClient } from '@angular/common/http';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 interface previousRequest {
@@ -294,7 +291,6 @@ export class FormComponent {
         },
       ],
     };
-    pdfMake.createPdf(documentDefinition).download(certName + ' Reimbursement Request Form.pdf');
   }
 }
 

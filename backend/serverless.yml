@@ -1,110 +1,138 @@
-org: ucmseniorproject1
-app: senior-project-backend
-service: backend
+service: senior-project-template
 frameworkVersion: '3'
-	
-plugins:
-  - serverless-s3-sync
-
-provider:
-  httpApi:
-    cors: true
-  name: aws
-  runtime: nodejs16.x
-  environment: 
-    DYNAMODB_USER_TABLE: ${self:service}-userTable-${sls:stage}
-    DYNAMODB_FORUM_TABLE: ${self:service}-reimbursementFormTable-${sls:stage}
-  stage: ${opt:stage, 'dev'}
-  region: us-east-1
-  profile: user1
-  iam: # Role is applied globally to all functions below allowing access to dynamodb table JobsTable
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - "dynamodb:PutItem"
-            - "dynamodb:GetItem"
-            - "dynamodb:Scan"
-            - "dynamodb:UpdateItem"
-            - "dynamodb:DeleteItem"
-          Resource:
-            - Fn::GetAtt: [ UserTable, Arn ]
-            - Fn::GetAtt: [ ReimbursementFormTable, Arn ]
 
 custom:
-  s3Sync:
-    - bucketName: angular-site-risen1ucm1
-      localDir: ../frontend/dist/frontend/browser
-      deleteRemoved: true # optional, indicates whether sync deletes files no longer present in localDir. Defaults to 'true'
-      followSymlinks: true # optional
-      defaultContentType: text/html
+  cognito:
+    region: us-east-1
+    userPoolName: my-user-pool
+    testUsers:
+      - username: user1
+        password: Password123
+      - username: user2
+        password: Password123
+      - username: user3
+        password: Password123
+      - username: user4
+        password: Password123
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  profile: your_aws_profile
+
 functions:
-  createUser:
-    handler: createUser.createUser
+  landingPage:
+    handler: src/handlers/landingPage.handler
     events:
       - httpApi:
-          path: /createUser
-          method: POST
-  getAllUsers:
-    handler: getAllUsers.getAllUsers
+          path: /
+          method: get
+
+  login:
+    handler: src/handlers/login.handler
     events:
       - httpApi:
-          path: /getUsers
-          method: GET
-  getUser:
-    handler: getUser.getUser
-    events:
-      - httpApi:
-          path: /getUser/{id}
-          method: GET
-  createForum:
-    handler: createForum.createForum
-    events:
-      - httpApi:
-          path: /createForum
-          method: POST
-  getAllForums:
-    handler: getAllForums.getAllForums
-    events:
-      - httpApi:
-          path: /getForums
-          method: GET
-  getForum:
-    handler: getForum.getForum
-    events:
-      - httpApi:
-          path: /getForum/{id}
-          method: GET
+          path: /login
+          method: post
+
 resources:
   Resources:
-    UserTable:
+    MyUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:custom.cognito.userPoolName}
+        UsernameAttributes:
+          - email
+        AutoVerifiedAttributes:
+          - email
+
+    TestUsersGroup:
+      Type: AWS::Cognito::UserPoolGroup
+      Properties:
+        GroupName: TestUsers
+        UserPoolId: !Ref MyUserPool
+
+    TestUser1:
+      Type: AWS::Cognito::UserPoolUser
+      Properties:
+        UserPoolId: !Ref MyUserPool
+        Username: ${self:custom.cognito.testUsers[0].username}
+        UserAttributes:
+          - Name: email
+            Value: user1@example.com
+        ValidationData:
+          - Name: email
+            Value: user1@example.com
+        Password: ${self:custom.cognito.testUsers[0].password}
+      DependsOn: MyUserPool
+
+    TestUser2:
+      Type: AWS::Cognito::UserPoolUser
+      Properties:
+        UserPoolId: !Ref MyUserPool
+        Username: ${self:custom.cognito.testUsers[1].username}
+        UserAttributes:
+          - Name: email
+            Value: user2@example.com
+        ValidationData:
+          - Name: email
+            Value: user2@example.com
+        Password: ${self:custom.cognito.testUsers[1].password}
+      DependsOn: MyUserPool
+
+    TestUser3:
+      Type: AWS::Cognito::UserPoolUser
+      Properties:
+        UserPoolId: !Ref MyUserPool
+        Username: ${self:custom.cognito.testUsers[2].username}
+        UserAttributes:
+          - Name: email
+            Value: user3@example.com
+        ValidationData:
+          - Name: email
+            Value: user3@example.com
+        Password: ${self:custom.cognito.testUsers[2].password}
+      DependsOn: MyUserPool
+
+    TestUser4:
+      Type: AWS::Cognito::UserPoolUser
+      Properties:
+        UserPoolId: !Ref MyUserPool
+        Username: ${self:custom.cognito.testUsers[3].username}
+        UserAttributes:
+          - Name: email
+            Value: user4@example.com
+        ValidationData:
+          - Name: email
+            Value: user4@example.com
+        Password: ${self:custom.cognito.testUsers[3].password}
+      DependsOn: MyUserPool
+
+    PageDataDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
+        TableName: PageData
         AttributeDefinitions:
-          - AttributeName: primary_key
+          - AttributeName: pageId
             AttributeType: S
-        BillingMode: PAY_PER_REQUEST
-        KeySchema:
-          - AttributeName: primary_key
-            KeyType: HASH
-        TableName: ${self:service}-userTable-${sls:stage}
-    ReimbursementFormTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: primary_key
+          - AttributeName: companyName
             AttributeType: S
-        BillingMode: PAY_PER_REQUEST
+          - AttributeName: missionStatement
+            AttributeType: S
+          - AttributeName: objective
+            AttributeType: S
+          - AttributeName: seniorProjectObjective
+            AttributeType: S
+          - AttributeName: techStackAllowed
+            AttributeType: S
         KeySchema:
-          - AttributeName: primary_key
+          - AttributeName: pageId
             KeyType: HASH
-        TableName: ${self:service}-reimbursementFormTable-${sls:stage}
-    SiteBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: angular-site-risen1ucm1
-        WebsiteConfiguration:
-          IndexDocument: index.html
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
 
 
   
