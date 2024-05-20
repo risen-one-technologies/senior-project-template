@@ -1,92 +1,58 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Backend - Serverless Application
 
-# Serverless Framework Node HTTP API on AWS
+This is the backend part of a serverless application, hosted on AWS using AWS Lambda and DynamoDB.
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+## Prerequisites
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+- AWS CLI configured with your AWS account
+- Node.js and npm installed
+- Serverless Framework installed globally
 
-## Usage
+## Installation
 
-### Deployment
+1. Clone the repository: (If not already completed with frontend Readme.md)
 
-```
-$ serverless deploy
-```
+   ```bash
+   git clone https://github.com/your-repo/my-serverless-app.git
+   cd my-serverless-app/backend
 
-After deploying, you should see output similar to:
+2. Install the Serverless Framework globally:
 
-```bash
-Deploying aws-node-http-api-project to stage dev (us-east-1)
+   ```bash
+   npm install -g serverless
 
-✔ Service deployed to stack aws-node-http-api-project-dev (152s)
+3. Install the project dependencies:
 
-endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  hello: aws-node-http-api-project-dev-hello (1.9 kB)
-```
+   ```bash
+   npm install
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/).
+## Configuration
 
-### Invocation
+1. Update the serverless.yml file with your AWS account details and DynamoDB table configuration if needed.
+2. Ensure the TableName in serverless.yml matches the table name used in your Lambda functions.
 
-After successful deployment, you can call the created application via HTTP:
+## Deployment
 
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-```
+1. Deploy the serverless application to AWS:
 
-Which should result in response similar to the following (removed `input` content for brevity):
+   ```bash
+   serverless deploy
 
-```json
-{
-  "message": "Go Serverless v2.0! Your function executed successfully!",
-  "input": {
-    ...
-  }
-}
-```
+2. After deployment, note the API endpoints provided by the Serverless Framework.
 
-### Local development
+   ```bash
+   serverless deploy
 
-You can invoke your function locally by using the following command:
+## Permissions
 
-```bash
-serverless invoke local --function hello
-```
+Ensure your IAM roles have the necessary permissions to interact with DynamoDB. You can define these in the serverless.yml file under iamRoleStatements.
 
-Which should result in response similar to the following:
+## Local Development
 
-```
-{
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
-```
+For local development and testing, consider using tools like serverless-offline, dynamodb-local, lambda-local, AWS SAM
 
+## Additional Resources
 
-Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
-```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
-
-```
-serverless offline
-```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+Serverless Framework -- https://www.serverless.com/framework/docs
+AWS SDK for JavaScript -- https://docs.aws.amazon.com/sdk-for-javascript/
+DynamoDB Documentation -- https://docs.aws.amazon.com/dynamodb/
