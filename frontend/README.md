@@ -14,22 +14,26 @@ This is the frontend part of a serverless application built with Angular. The ap
    ```bash
    git clone https://github.com/risen-one-technologies/senior-project-template.git
    cd senior-project-template/frontend
+   ```
 
 2. Install the dependencies:
   ```bash
   npm install
+  ```
 
 ## Development Server
 
 3. Run the development server:
   ```bash
   ng serve
+  ```
 
 ## Build
 
 1. Build the project:
   ```bash
   ng build --prod
+  ```
 
 2. The build artifacts will be stored in the dist/frontend directory.
 
