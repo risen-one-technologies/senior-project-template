@@ -1,36 +1,37 @@
+'use strict';
+
 const AWS = require('aws-sdk');
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-const cognito = new AWS.CognitoIdentityServiceProvider();
+module.exports.handler = async (event) => {
+  const requestBody = JSON.parse(event.body);
 
-exports.handler = async (event) => {
-  const { username, password } = JSON.parse(event.body);
+  const params = {
+    TableName: process.env.USERS_TABLE,
+    Key: {
+      username: requestBody.username
+    }
+  };
 
   try {
-    const params = {
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: 'YOUR_COGNITO_CLIENT_ID',
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
-      },
-    };
+    const data = await dynamoDb.get(params).promise();
 
-    const result = await cognito.initiateAuth(params).promise();
+    if (!data.Item || data.Item.password !== requestBody.password) {
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ message: 'Invalid username or password' })
+      };
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        accessToken: result.AuthenticationResult.AccessToken,
-        idToken: result.AuthenticationResult.IdToken,
-        refreshToken: result.AuthenticationResult.RefreshToken,
-      }),
+      body: JSON.stringify({ message: 'Login successful' })
     };
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Error:', error);
     return {
-      statusCode: error.statusCode || 500,
-      body: JSON.stringify({ error: error.message || 'Internal Server Error' }),
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal server error' })
     };
   }
 };
