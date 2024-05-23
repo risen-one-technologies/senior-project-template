@@ -1,139 +1,66 @@
 service: senior-project-template
-frameworkVersion: '3'
-
-custom:
-  cognito:
-    region: us-east-1
-    userPoolName: my-user-pool
-    testUsers:
-      - username: user1
-        password: Password123
-      - username: user2
-        password: Password123
-      - username: user3
-        password: Password123
-      - username: user4
-        password: Password123
 
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: ${opt:stage, 'dev'}
   region: us-east-1
-  profile: your_aws_profile
 
-functions:
-  landingPage:
-    handler: src/handlers/landingPage.handler
-    events:
-      - httpApi:
-          path: /
-          method: get
-
-  login:
-    handler: src/handlers/login.handler
-    events:
-      - httpApi:
-          path: /login
-          method: post
+plugins:
+  - serverless-offline
 
 resources:
   Resources:
-    MyUserPool:
-      Type: AWS::Cognito::UserPool
-      Properties:
-        UserPoolName: ${self:custom.cognito.userPoolName}
-        UsernameAttributes:
-          - email
-        AutoVerifiedAttributes:
-          - email
-
-    TestUsersGroup:
-      Type: AWS::Cognito::UserPoolGroup
-      Properties:
-        GroupName: TestUsers
-        UserPoolId: !Ref MyUserPool
-
-    TestUser1:
-      Type: AWS::Cognito::UserPoolUser
-      Properties:
-        UserPoolId: !Ref MyUserPool
-        Username: ${self:custom.cognito.testUsers[0].username}
-        UserAttributes:
-          - Name: email
-            Value: user1@example.com
-        ValidationData:
-          - Name: email
-            Value: user1@example.com
-        Password: ${self:custom.cognito.testUsers[0].password}
-      DependsOn: MyUserPool
-
-    TestUser2:
-      Type: AWS::Cognito::UserPoolUser
-      Properties:
-        UserPoolId: !Ref MyUserPool
-        Username: ${self:custom.cognito.testUsers[1].username}
-        UserAttributes:
-          - Name: email
-            Value: user2@example.com
-        ValidationData:
-          - Name: email
-            Value: user2@example.com
-        Password: ${self:custom.cognito.testUsers[1].password}
-      DependsOn: MyUserPool
-
-    TestUser3:
-      Type: AWS::Cognito::UserPoolUser
-      Properties:
-        UserPoolId: !Ref MyUserPool
-        Username: ${self:custom.cognito.testUsers[2].username}
-        UserAttributes:
-          - Name: email
-            Value: user3@example.com
-        ValidationData:
-          - Name: email
-            Value: user3@example.com
-        Password: ${self:custom.cognito.testUsers[2].password}
-      DependsOn: MyUserPool
-
-    TestUser4:
-      Type: AWS::Cognito::UserPoolUser
-      Properties:
-        UserPoolId: !Ref MyUserPool
-        Username: ${self:custom.cognito.testUsers[3].username}
-        UserAttributes:
-          - Name: email
-            Value: user4@example.com
-        ValidationData:
-          - Name: email
-            Value: user4@example.com
-        Password: ${self:custom.cognito.testUsers[3].password}
-      DependsOn: MyUserPool
-
-    PageDataDynamoDBTable:
+    UsersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: PageData
+        TableName: users
         AttributeDefinitions:
-          - AttributeName: pageId
-            AttributeType: S
-          - AttributeName: companyName
-            AttributeType: S
-          - AttributeName: missionStatement
-            AttributeType: S
-          - AttributeName: objective
-            AttributeType: S
-          - AttributeName: seniorProjectObjective
-            AttributeType: S
-          - AttributeName: techStackAllowed
+          - AttributeName: username
             AttributeType: S
         KeySchema:
-          - AttributeName: pageId
+          - AttributeName: username
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST
+    User1:
+      Type: AWS::DynamoDB::TableItem
+      Properties:
+        TableName: ${self:resources.Resources.UsersTable.Properties.TableName}
+        Item:
+          username: "user1"
+          password: "password1"
+    User2:
+      Type: AWS::DynamoDB::TableItem
+      Properties:
+        TableName: ${self:resources.Resources.UsersTable.Properties.TableName}
+        Item:
+          username: "user2"
+          password: "password2"
+    User3:
+      Type: AWS::DynamoDB::TableItem
+      Properties:
+        TableName: ${self:resources.Resources.UsersTable.Properties.TableName}
+        Item:
+          username: "user3"
+          password: "password3"
+    User4:
+      Type: AWS::DynamoDB::TableItem
+      Properties:
+        TableName: ${self:resources.Resources.UsersTable.Properties.TableName}
+        Item:
+          username: "user4"
+          password: "password4"
 
+functions:
+  login:
+    handler: src/handlers/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
 
   
 

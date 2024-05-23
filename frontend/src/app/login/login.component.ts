@@ -47,6 +47,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import { FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs'
+import { AuthService } from '../auth.service';
 
 
 interface previousRequest {
@@ -56,7 +57,7 @@ interface previousRequest {
 
 
 @Component({
-  selector: 'app-form',
+  selector: 'app-login',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
@@ -100,60 +101,37 @@ interface previousRequest {
     ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  template: `
+  <input type="text" [(ngModel)]="username" placeholder="Username">
+  <input type="password" [(ngModel)]="password" placeholder="Password">
+  <button (click)="login()">Login</button>
+`
 })
 export class LoginComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required])
+  username: string = ''; // Initialize with an empty string
+  password: string = ''; // Initialize with an empty string
 
-  hide = true;
+  constructor(private authService: AuthService, private router: Router) { }
 
-  errorMessage = '';
-
-  constructor(private _snackBar: MatSnackBar, private router: Router ) {
-    
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessageEmail())
-
-      merge(this.password.statusChanges, this.password.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessagePassword())
+  login() {
+    this.authService.login(this.username, this.password)
+      .subscribe({
+        next: (success) => {
+          if (success) {
+            // Navigate to home component if login is successful
+            this.router.navigate(['/home']);
+          } else {
+            // Handle login failure
+            console.error('Login failed');
+          }
+        },
+        error: (error) => {
+          // Handle login error
+          console.error('Login error:', error);
+        }
+      });
   }
-  ngOnInit(){}
-  close() {
-    this.router.navigate(['/']);
-  }
-  openSnackBar(message: string){
-    if (!this.email.hasError('required') && !this.password.hasError('required')){
-      this._snackBar.open("Welcome " + message, "Close",{duration: 2000});
-      this.router.navigate(['/form']);
-    }
-    else{
-      this._snackBar.open("Login Error : Fill Required Fields", "Close",{duration: 2000});
-    }
-    
-  }
-  
-  updateErrorMessageEmail(){
-    if (this.email.hasError('required')) {
-      this.errorMessage = 'You must enter value';
-    }
-    else {
-      this.errorMessage = '';
-
-    }
-  }
-
-  updateErrorMessagePassword(){
-    if (this.password.hasError('required')) {
-      this.errorMessage = 'You must enter value';
-    }
-    else {
-      this.errorMessage = '';
-    }
-  }
-
 }
 
 
