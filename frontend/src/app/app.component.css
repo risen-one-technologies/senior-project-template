@@ -1,23 +1,28 @@
-nav{
-    position: sticky;
-    top: 20px;
-    padding: 8px;
-    color: white;
-    background-color: goldenrod;
+.content-div {
+    width: 100%;
+    display: flex;
 }
-nav ul{
-    display:flex;
-    flex-direction: row;
-    column-gap: 32px;
 
-    list-style-type: none;
-    
+.content {
+    width: 90vw;
+    min-height: 80vh;
 }
-li a{
-    color: white;
-    text-decoration: none;
-    padding: 4px;
+
+app-sidenav {
+    width: 10vw;
+    min-width: 120px
 }
-li a:hover{
-    border-style: solid;
+
+@media screen and (max-width: 575px) {
+    app-sidenav {
+        display: none;
+    }
+
+    .content {
+        width: 100%;
+    }
+}
+
+.mat-mdc-tooltip.tooltip {
+    color:red !important;
 }
