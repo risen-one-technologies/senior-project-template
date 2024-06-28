@@ -7,8 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   login(username: string, password: string): Observable<boolean> {
     // Your login logic with Lambda function
@@ -23,5 +22,19 @@ export class AuthService {
         observer.error('Login failed'); // Notify subscribers that login failed
       }
     });
+  }
+
+  logout() {
+    // Your logout logic with Lambda function
+    // Simulating success for demonstration purposes
+    const logoutSuccess = true;
+
+    if (logoutSuccess) {
+      // Redirect to login page or any other desired page
+      this.router.navigate(['/login']);
+    } else {
+      // Handle logout failure
+      console.error('Logout failed');
+    }
   }
 }

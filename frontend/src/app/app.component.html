@@ -1,15 +1,8 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROC Template Portal</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  </head>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="app.component.css">
-
-<router-outlet></router-outlet>
-
-
+<app-header *ngIf="!router.url.startsWith('/login')"></app-header>
+<div class="content-div">
+    <app-sidenav *ngIf="!router.url.startsWith('/login')"></app-sidenav>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<app-footer *ngIf="!router.url.startsWith('/login')"></app-footer>
