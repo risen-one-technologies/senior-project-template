@@ -83,21 +83,47 @@ Navigate to the frontend directory of the project and install the necessary depe
 
 - Command: `npm install`
 
-### Step 3: Run the Development Server
+### Step 3: Develop and Build the Frontend
 
-Start the development server to preview the Angular application.
+#### Run the Development Server
+
+Start the development server to preview the Angular application locally.
 
 - Command: `ng serve`
 
-### Step 4: Build the Project
+#### Build the Project
 
 Build the project to prepare it for deployment. The build artifacts will be stored in the `dist/frontend` directory.
 
 - Command: `ng build --prod`
 
-### Step 5: Deploy the Frontend
+### Step 4: Deploy the Frontend
+
+#### Configure Backend Integration
 
 Ensure that the build output directory (`dist/frontend`) is correctly set up in the backend serverless configuration. Refer to the backend README for more details on deploying the frontend with the backend.
+
+#### Deploy to AWS S3
+
+1. Create an S3 Bucket
+
+Go to the AWS Management Console and navigate to the S3 service. Create a new bucket for your frontend files.
+
+2. Upload Build Artifacts
+
+After building the Angular project, upload the contents of the `dist/frontend` directory to the S3 bucket.
+
+3. Configure Bucket Permissions
+
+Set the appropriate permissions for the S3 bucket to allow public access to the files.
+
+4. Enable Static Website Hosting
+
+Enable static website hosting for the S3 bucket.
+
+### Accessing Your Application
+
+After deploying the frontend to S3 and setting up the backend on AWS, you can access your application through the S3 bucket URL provided in the static website hosting settings.
 
 ## Additional Resources
 
