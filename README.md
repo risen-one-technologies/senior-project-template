@@ -61,7 +61,7 @@ Follow these steps to configure the login functionality:
 
 ### Lambda Function Code Explanation:
 
-The Lambda function is responsible for handling login requests. Here's a breakdown of the code in [login.js](./src/handlers/login.js):
+The Lambda function is responsible for handling login requests. Here's a breakdown of the code in [login.js](.backend/src/handlers/login.js):
 - The function uses the AWS SDK to interact with DynamoDB.
 - It reads the username and password from the request body.
 - It retrieves the user from the DynamoDB table using the username.
