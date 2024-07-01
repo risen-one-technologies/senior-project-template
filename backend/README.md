@@ -1,58 +1,34 @@
-# Backend - Serverless Application
+## Backend Setup
 
-This is the backend part of a serverless application, hosted on AWS using AWS Lambda and DynamoDB.
+### Step 1: Clone the Repository
 
-## Prerequisites
+Download the project repository to your local machine.
 
-- AWS CLI configured with your AWS account
-- Node.js and npm installed
-- Serverless Framework installed globally
+- Command: `git clone https://github.com/your-repo/my-serverless-app.git`
+- Command: `cd my-serverless-app/backend`
 
-## Installation
+### Step 2: Install Serverless Framework
 
-1. Clone the repository: (If not already completed with frontend Readme.md)
+Install the Serverless Framework, which will help you manage the serverless backend.
 
-   ```bash
-   git clone https://github.com/your-repo/my-serverless-app.git
-   cd my-serverless-app/backend
+- Command: `npm install -g serverless`
 
-2. Install the Serverless Framework globally:
+### Step 3: Install Project Dependencies
 
-   ```bash
-   npm install -g serverless
+Navigate to the backend directory of the project and install the necessary dependencies.
 
-3. Install the project dependencies:
+- Command: `npm install`
 
-   ```bash
-   npm install
+### Step 4: Configure Serverless Framework
 
-## Configuration
+1. Open the `serverless.yml` file in the backend directory.
+2. Update the file with your AWS account details and configure the DynamoDB table if needed.
+3. Ensure the table name in `serverless.yml` matches the table name used in your Lambda functions.
 
-1. Update the serverless.yml file with your AWS account details and DynamoDB table configuration if needed.
-2. Ensure the TableName in serverless.yml matches the table name used in your Lambda functions.
+### Step 5: Deploy the Backend
 
-## Deployment
+Deploy the serverless application to AWS. This will set up the necessary AWS Lambda functions and DynamoDB tables.
 
-1. Deploy the serverless application to AWS:
+- Command: `serverless deploy`
 
-   ```bash
-   serverless deploy
-
-2. After deployment, note the API endpoints provided by the Serverless Framework.
-
-   ```bash
-   serverless deploy
-
-## Permissions
-
-Ensure your IAM roles have the necessary permissions to interact with DynamoDB. You can define these in the serverless.yml file under iamRoleStatements.
-
-## Local Development
-
-For local development and testing, consider using tools like serverless-offline, dynamodb-local, lambda-local, AWS SAM
-
-## Additional Resources
-
-Serverless Framework -- https://www.serverless.com/framework/docs
-AWS SDK for JavaScript -- https://docs.aws.amazon.com/sdk-for-javascript/
-DynamoDB Documentation -- https://docs.aws.amazon.com/dynamodb/
+After deployment, note the API endpoints provided by the Serverless Framework.
